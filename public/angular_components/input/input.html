@@ -1,0 +1,18 @@
+<form ng-controller="InputCtrl">
+	<h2>Translate</h2>
+	<input type="text" ng-model="translationInput" placeholder="Your Phrase" />
+	<br />
+	from
+	<ul ng-model="fromLanguage">
+		<li ng-repeat="language in AllLanguages">{{ language }}</li>
+	</ul>
+	to
+	<ul ng-model="toLanguage">
+		<li ng-repeat="language in AllLanguages">{{ language }}</li>
+	</ul>
+	<h2>Results</h2>
+	<p>
+		{{ results }}
+	</p>
+	<input type="submit" id="submit" value="Translate" />
+</form>

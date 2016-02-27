@@ -1,0 +1,17 @@
+{
+  "name": "translation-station",
+  "description": "A translation app that uses the Google, Bing and WebServiceX API's simultaneously",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sebastianrjay/TranslationStation",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-loader": "~1.5.0",
+    "angular-mocks": "~1.5.0",
+    "html5-boilerplate": "~5.2.0"
+  },
+  "resolutions": {
+    "angular": "1.5.0"
+  }
+}
