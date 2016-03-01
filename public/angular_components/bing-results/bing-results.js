@@ -6,6 +6,6 @@ var url = 'http://api.microsofttranslator.com';
 
 angular.module('translationStation.bing-results', [])
 
-.controller('BingResultsCtrl', function($scope) {
+.controller('BingResultsCtrl', function($http, $scope) {
 	
 });

@@ -1,25 +1,31 @@
 var requestMaker = require('request');
-var BB = BingBackend = {};
-BB.queryCache = {};
-var str;
+var NodeCache = require('node-cache');
+var Bing = {};
+Bing.queryCache = new NodeCache();
 
-BB.fetchBingResults = function() {
-	if(BB.bingToken && BB.bingExpiration > (new Date().getTime() + 30000)) {
-		// Write code to fetch results from Bing with the current BB.bingToken
-		var languageFrom = "en", languageTo = "de", text = "Hello";
-		console.log('hi');
+Bing.translate = function(fromLanguage, toLanguage, text, successCallback) {
+	if(Bing.bingToken && Bing.bingExpiration > (new Date().getTime() + 30000)) {
 		var url = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + 
-			encodeURIComponent(BB.bingToken) + "&from=" + "dope" + 
-			"&to=" + "aardvark" + "&text=" + text;
-    requestMaker.get(url)
-    	.on('response', function(response) {
-    		// console.log(JSON.stringify(response).indexOf("Hallo"));
-    		console.log(response.statusCode);
-    	});
+			encodeURIComponent(Bing.bingToken) + "&from=" + fromLanguage + 
+			"&to=" + toLanguage + "&text=" + text;
+			
+    requestMaker(url, function(error, response, body) {
+  		if(error) {
+  			throw error;
+  		} else {
+  			var translatedText = body.slice(12, body.length - 2);
+  			Bing.queryCache.set((fromLanguage + toLanguage + text), translatedText);
+  			successCallback(translatedText);
+  		}
+    });
+	} else {
+		Bing.fetchBingToken(Bing.translate, fromLanguage, toLanguage, text, successCallback);
 	}
 };
 
-BB.fetchBingToken = function(successCallback) {	
+Bing.fetchBingToken = function(successCallback) {
+	var callbackArguments = [].slice.call(arguments, 1);
+
 	requestMaker.post(
 	    'https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/',
 	    { form: { 
@@ -29,16 +35,16 @@ BB.fetchBingToken = function(successCallback) {
 	       grant_type  : 'client_credentials' 
 	    } },
 	    function (error, bingResponse, body) {
-	        if (!error && bingResponse.statusCode == 200) {
-	        		var responseBody = JSON.parse(bingResponse.body);
-	        		BB.bingToken = responseBody.access_token;
-	        		BB.bingExpiration = new Date().getTime() + 595000;
-	        		successCallback();
-	        } else {
-	            throw 'ERROR: Could not fetch Bing token';            
-	        }
+        if (!error && bingResponse.statusCode == 200) {
+        		var responseBody = JSON.parse(bingResponse.body);
+        		Bing.bingToken = responseBody.access_token;
+        		Bing.bingExpiration = new Date().getTime() + 595000;
+        		successCallback.apply(this, callbackArguments);
+        } else {
+            throw 'ERROR: Could not fetch Bing token';           
+        }
 	    }
 	);
 };
 
-module.exports = BingBackend;
+module.exports = Bing;
