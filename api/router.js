@@ -10,7 +10,7 @@ var router = express.Router();
 //       });
 // };
 
-router.route('/translate/bing/')
+router.route('/bing/translate/')
   .get(function(req, res) {
   		var query = req.query;
       var fromLanguage = query.from, toLanguage = query.to, text = query.text;
@@ -19,5 +19,14 @@ router.route('/translate/bing/')
       if(cachedResponse) response.send(cachedResponse);
       else Bing.translate(fromLanguage, toLanguage, text, res.send.bind(res));
   });
+
+router.route('/bing/language_codes/')
+	.get(function(req, res) {
+		var url = 'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguagesForTranslate?appId=Bearer '
+		Bing.getLanguageCodes(res.send.bind(res), true);
+	});
+
+console.log('Language Codes:\n');
+Bing.getLanguageCodes(console.log);
 
 module.exports = router;
