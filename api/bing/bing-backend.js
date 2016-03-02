@@ -57,8 +57,13 @@ Bing.getLanguageCodes = function(completionCallback, convertToJSON) {
   		if(error) {
   			throw error;
   		} else {
-  			if(convertToJSON) completionCallback(JSON.stringify(body));
-  			else completionCallback(body);
+  			if(convertToJSON) {
+  				Bing.queryCache.set("language_codes_json", JSON.stringify(body))
+  				completionCallback(JSON.stringify(body));
+  			} else {
+  				Bing.queryCache.set("language_codes", body);
+  				completionCallback(body);
+  			}
   		}
     });
 	} else {

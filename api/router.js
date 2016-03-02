@@ -16,14 +16,17 @@ router.route('/bing/translate/')
       var fromLanguage = query.from, toLanguage = query.to, text = query.text;
       var cachedResponse = Bing.queryCache.get(fromLanguage + toLanguage + text);
 
-      if(cachedResponse) response.send(cachedResponse);
+      if(cachedResponse) res.send(cachedResponse);
       else Bing.translate(fromLanguage, toLanguage, text, res.send.bind(res));
   });
 
 router.route('/bing/language_codes/')
 	.get(function(req, res) {
 		var url = 'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguagesForTranslate?appId=Bearer '
-		Bing.getLanguageCodes(res.send.bind(res), true);
+		var cachedResponse = Bing.queryCache.get("language_codes_json");
+
+		if(cachedResponse) res.send(cachedResponse);
+		else Bing.getLanguageCodes(res.send.bind(res), true);
 	});
 
 console.log('Language Codes:\n');
