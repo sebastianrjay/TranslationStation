@@ -29,7 +29,4 @@ router.route('/bing/language_codes/')
 		else Bing.getLanguageCodes(res.send.bind(res), true);
 	});
 
-console.log('Language Codes:\n');
-Bing.getLanguageCodes(console.log);
-
 module.exports = router;

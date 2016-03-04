@@ -1,18 +1,24 @@
 <form ng-controller="InputCtrl">
 	<h2>Translate</h2>
-	<input type="text" ng-model="translationInput" placeholder="Your Phrase" />
+	<textarea type="text" ng-model="$root.translationInput" placeholder="Your Phrase"></textarea>
 	<br />
 	from
-	<ul ng-model="fromLanguage">
-		<li ng-repeat="language in AllLanguages">{{ language }}</li>
+	<ul>
+		<input type="text" ng-model="fromLanguage">
+		<li ng-repeat="language in AllLanguages | filter:fromLanguage" ng-click="setFromLang($event)">
+			{{ language }}
+		</li>
 	</ul>
 	to
-	<ul ng-model="toLanguage">
-		<li ng-repeat="language in AllLanguages">{{ language }}</li>
+	<ul>
+		<input type="text" ng-model="toLanguage">
+		<li ng-repeat="language in AllLanguages | filter:toLanguage" ng-click="setToLang($event)">
+			{{ language }}
+		</li>
 	</ul>
 	<h2>Results</h2>
 	<p>
 		{{ results }}
 	</p>
-	<input type="submit" id="submit" value="Translate" />
+	<button class="btn btn-primary">Translate</button>
 </form>

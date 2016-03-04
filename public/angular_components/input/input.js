@@ -1,8 +1,6 @@
 'use strict';
 
-var Constants = {};
-
-Constants.AllLanguages = ["Afrikaans", "Irish", "Albanian", "Italian", "Arabic", 
+var AllLanguages = ["Afrikaans", "Irish", "Albanian", "Italian", "Arabic", 
 	"Japanese", "Azerbaijani", "Kannada", "Basque", "Korean", "Bengali", "Latin", 
 	"Belarusian", "Latvian", "Bulgarian", "Lithuanian", "Catalan", "Macedonian", 
 	"Chinese Simplified", "Malay", "Chinese Traditional", "Maltese", "Croatian", 
@@ -16,7 +14,7 @@ Constants.AllLanguages = ["Afrikaans", "Irish", "Albanian", "Italian", "Arabic",
 	"Klingon", "Klingon (pIqaD)", "Querétaro Otomi", "Serbian (Cyrillic)",
 	"Serbian (Latin)", "Yucatec Maya"];
 
-Constants.BingLanguages = {
+var BingLanguages = {
 	"Arabic": "ar",
 	"Bosnian (Latin)": "bs-Latn",
 	"Bulgarian": "bg",
@@ -71,7 +69,7 @@ Constants.BingLanguages = {
 	"Yucatec Maya": "yua"
 };
 
-Constants.GoogleLanguages = {
+var GoogleLanguages = {
 	"Afrikaans": "af",
 	"Irish": "ga",
 	"Albanian": "sq",
@@ -139,10 +137,10 @@ Constants.GoogleLanguages = {
 	"Yiddish": "yi"
 };
 
-Constants.WebServiceXLanguages = ["English", "Chinese", "French", "German", 
+var WebServiceXLanguages = ["English", "Chinese", "French", "German", 
 	"Italian", "Japanese", "Korean", "Portuguese", "Spanish", "Russian"];
 
-Constants.WebServiceXPairings = ["EnglishTOChinese", "EnglishTOFrench", "EnglishTOGerman",
+var WebServiceXPairings = ["EnglishTOChinese", "EnglishTOFrench", "EnglishTOGerman",
   "EnglishTOItalian", "EnglishTOJapanese", "EnglishTOKorean", "EnglishTOPortuguese",
   "EnglishTOSpanish", "ChineseTOEnglish", "FrenchTOEnglish", "FrenchTOGerman",
   "GermanTOEnglish", "GermanTOFrench", "ItalianTOEnglish", "JapaneseTOEnglish",
@@ -152,16 +150,36 @@ Constants.WebServiceXPairings = ["EnglishTOChinese", "EnglishTOFrench", "English
 
 angular.module('translationStation.input', [])
 
-.controller('InputCtrl', function($http, $scope) {
+.controller('InputCtrl', function($http, $rootScope, $scope) {
 	var url = 'www.webservicex.net';
-	$scope.AllLanguages = Constants.AllLanguages;
-	$scope.BingLanguages = Constants.BingLanguages;
-	$scope.GoogleLanguages = Constants.GoogleLanguages;
-	$scope.WebServiceXLanguages = Constants.WebServiceXLanguages;
-	$scope.WebServiceXPairings = Constants.WebServiceXPairings;
+	$scope.inputText = "";
 
-	$scope.fromLanguage = "Spanish";
-	$scope.toLanguage = "English";
+	$scope.AllLanguages = AllLanguages;
+	$scope.BingLanguages = BingLanguages;
+	$scope.GoogleLanguages = GoogleLanguages;
+	$scope.WebServiceXLanguages = WebServiceXLanguages;
+	$scope.WebServiceXPairings = WebServiceXPairings;
+
+	$scope.fromLanguage = "";
+	$scope.toLanguage = "";
+	$scope.fromLanguageBingAbbrv = "";
+	$scope.toLanguageBingAbbrv = "";
+	$scope.fromLanguageGoogleAbbrv = "";
+	$scope.toLanguageGoogleAbbrv = "";
+
+	$scope.setFromLang = function(event) {
+		$scope.fromLanguage = event.currentTarget.innerHTML.trim();
+		$rootScope.fromLanguageBingAbbrv = BingLanguages[$scope.fromLanguage];
+		$rootScope.fromLanguageGoogleAbbrv = GoogleLanguages[$scope.fromLanguage];
+		console.log(event);
+	};
+
+	$scope.setToLang = function(event) {
+		$scope.toLanguage = event.currentTarget.innerHTML.trim();
+		$rootScope.toLanguageBingAbbrv = BingLanguages[$scope.toLanguage];
+		$rootScope.toLanguageGoogleAbbrv = GoogleLanguages[$scope.toLanguage];
+		console.log(event);
+	};
 
 	$scope.submitTranslationInput = function() {
 		if($scope.translationInput) {
