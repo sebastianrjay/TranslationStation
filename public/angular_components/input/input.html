@@ -1,24 +1,31 @@
 <form ng-controller="InputCtrl">
 	<h2>Translate</h2>
-	<textarea type="text" ng-model="$root.translationInput" placeholder="Your Phrase"></textarea>
 	<br />
-	from
-	<ul>
-		<input type="text" ng-model="fromLanguage">
-		<li ng-repeat="language in AllLanguages | filter:fromLanguage" ng-click="setFromLang($event)">
-			{{ language }}
+	<ul class="col-md-6 left-language-selector">
+		<li ng-repeat="language in AllLanguages | filter:fromLanguage | limitTo:3" ng-click="setFromLang($event)"
+			class="language-container">
+			<div role="button" ng-class="{'first': $first, 'last': $last}">
+				{{ language }}
+			</div>
 		</li>
+		<input type="text" ng-model="fromLanguage" placeholder="Search Languages">
 	</ul>
-	to
-	<ul>
-		<input type="text" ng-model="toLanguage">
-		<li ng-repeat="language in AllLanguages | filter:toLanguage" ng-click="setToLang($event)">
-			{{ language }}
+	<ul class="col-md-6 right-language-selector">
+		<li ng-repeat="language in AllLanguages | filter:toLanguage | limitTo:3" ng-click="setToLang($event)"
+		class="language-container">
+			<div role="button" ng-class="{'first': $first, 'last': $last}">
+				{{ language }}
+			</div>
 		</li>
+		<input type="text" ng-model="toLanguage" placeholder="Search Languages">
 	</ul>
 	<h2>Results</h2>
 	<p>
 		{{ results }}
 	</p>
-	<button class="btn btn-primary">Translate</button>
+	<button class="btn btn-primary" ng-click="translate()">Translate</button>
+	<br>
+	<div ng-include="'/angular_components/google-results/google-results.html'"></div>
+  <div ng-include="'/angular_components/bing-results/bing-results.html'"></div>
+  <div ng-include="'/angular_components/web-service-x-results/web-service-x-results.html'"></div>
 </form>

@@ -1,6 +1,35 @@
 /* app css stylesheet */
 
-.menu {
+.left-language-selector, .right-language-selector {
+  width: 100%;
+}
+
+.language-container {
+  list-style: none;
+  position: relative;
+  display: inline-block;
+}
+
+[role="button"] {
+  border-top: 0.1em solid black;
+  border-bottom: 0.1em solid black;
+  background-color: #F8F8F8;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0.4em;
+}
+
+[role="button"] .first {
+  border-left: 0.1em solid black;
+  border-radius: 0.1em 0 0 0.1em;
+}
+
+[role="button"] .last {
+  border-left: 0.1em solid black;
+  border-radius: 0 0.1em 0.1em 0;
+}
+
+/*.menu {
   list-style: none;
   border-bottom: 0.1em solid black;
   margin-bottom: 2em;
@@ -27,4 +56,4 @@
 .menu > li:nth-child(1):before {
   content: "";
   padding: 0;
-}
+}*/

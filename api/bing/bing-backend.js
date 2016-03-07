@@ -13,7 +13,7 @@ Bing.translate = function(fromLanguage, toLanguage, text, completionCallback) {
   		if(error) {
   			throw error;
   		} else {
-  			var translatedText = body.slice(12, body.length - 2);
+  			var translatedText = body.slice(13, body.length - 3);
   			Bing.queryCache.set((fromLanguage + toLanguage + text), translatedText);
   			completionCallback(translatedText);
   		}
@@ -24,7 +24,7 @@ Bing.translate = function(fromLanguage, toLanguage, text, completionCallback) {
 };
 
 Bing.fetchBingToken = function(successCallback) {
-	var callbackArguments = [].slice.call(arguments, 1);
+	var successCallbackArguments = [].slice.call(arguments, 1);
 
 	requestMaker.post(
 	    'https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/',
@@ -39,7 +39,7 @@ Bing.fetchBingToken = function(successCallback) {
       		var responseBody = JSON.parse(bingResponse.body);
       		Bing.bingToken = responseBody.access_token;
       		Bing.bingExpiration = new Date().getTime() + 595000;
-      		successCallback.apply(null, callbackArguments);
+      		successCallback.apply(null, successCallbackArguments);
         } else {
           throw 'ERROR: Could not fetch Bing token';           
         }
