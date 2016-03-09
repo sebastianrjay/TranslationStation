@@ -19,14 +19,19 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 	};
 
 	$scope.setFromLang = function($event) {
-		$scope.fromLanguage = event.currentTarget.innerHTML.trim();
+		$scope.fromLanguage = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$rootScope.fromLanguageBingAbbrv = apiConstants.BingLanguages[$scope.fromLanguage];
 		$rootScope.fromLanguageGoogleAbbrv = apiConstants.GoogleLanguages[$scope.fromLanguage];
 	};
 
 	$scope.setToLang = function($event) {
-		$scope.toLanguage = event.currentTarget.innerHTML.trim();
+		$scope.toLanguage = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$rootScope.toLanguageBingAbbrv = apiConstants.BingLanguages[$scope.toLanguage];
 		$rootScope.toLanguageGoogleAbbrv = apiConstants.GoogleLanguages[$scope.toLanguage];
 	};
+});
+
+$(document).on('click', '.language-container', function(event) {
+	$(event.currentTarget).parent().children().children().removeClass('selected');
+	$(event.currentTarget).children().addClass('selected');
 });

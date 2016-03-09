@@ -10,23 +10,55 @@
   display: inline-block;
 }
 
-[role="button"] {
-  border-top: 0.1em solid black;
-  border-bottom: 0.1em solid black;
+*[role="button"] {
+  border-left: 0.05em solid #D0D0D0;
+  border-right: 0.05em solid #D0D0D0;
+  border-top: 0.1em solid #D0D0D0;
+  border-bottom: 0.1em solid #D0D0D0;
   background-color: #F8F8F8;
   font-size: 12px;
   font-weight: bold;
-  padding: 0.4em;
+  padding: 0.4em 0.6em 0.4em 0.6em;
 }
 
-[role="button"] .first {
-  border-left: 0.1em solid black;
-  border-radius: 0.1em 0 0 0.1em;
+*[role="button"].first {
+  border-right: 0.1em solid #D0D0D0;
+  border-radius: 0.2em 0 0 0.2em;
 }
 
-[role="button"] .last {
-  border-left: 0.1em solid black;
-  border-radius: 0 0.1em 0.1em 0;
+*[role="button"].last {
+  border-right: 0.1em solid #D0D0D0;
+  border-radius: 0 0.2em 0.2em 0;
+}
+
+*[role="button"]:hover {
+  border: 0.1em solid #A0A0A0;
+}
+
+*[role="button"].selected {
+  background-color: #C0C0C0;
+}
+
+.language-filter {
+  padding: 0.2em;
+}
+
+.translation-input, .translated-text {
+  font-size: 16px;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding: 0.5em 2em 2em 0.5em;
+  height: 148px;
+  width: 100%;
+}
+
+#translate-btn {
+  font-weight: bold;
+}
+
+.translated-text {
+  background-color: #F0F0F0;
 }
 
 /*.menu {

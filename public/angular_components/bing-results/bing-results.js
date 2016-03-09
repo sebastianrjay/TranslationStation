@@ -6,7 +6,7 @@ angular.module('translationStation.bing-results', [])
 	$scope.translatedText = "";
 
 	$scope.$on('translate', function(event) {
-
+		
 		if($rootScope.fromLanguageBingAbbrv && $rootScope.toLanguageBingAbbrv) {
 			var queryString = '/api/bing/translate/?from=' + $rootScope.fromLanguageBingAbbrv +
 			'&to=' + $rootScope.toLanguageBingAbbrv + '&text=' + $rootScope.translationInput;
