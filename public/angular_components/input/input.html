@@ -1,37 +1,49 @@
-<form ng-controller="InputCtrl">
-	<h2>Translate</h2>
-	<br />
-	<div class="col-md-6">
-		<ul class="left-language-selector">
-			<li ng-repeat="language in AllLanguages | filter:fromLanguageFilter | limitTo:3" 
-				ng-click="setFromLang($event)" class="language-container">
-				<div role="button" ng-class="{'first': $first, 'last': $last}">
-					{{ language }}
-				</div>
-			</li>
-			<input type="text" class="language-filter" ng-model="fromLanguageFilter" 
-				placeholder="Search Languages">
-		</ul>
-		<textarea class="translation-input" ng-model="$root.translationInput"
-				ng-keyup="translate()"></textarea>
-	</div>
-	<div class="col-md-6">
-		<ul class="right-language-selector">
-			<li ng-repeat="language in AllLanguages | filter:toLanguageFilter | limitTo:3" 
-				ng-click="setToLang($event)" class="language-container">
-				<div role="button" ng-class="{'first': $first, 'last': $last}">
-					{{ language }}
-				</div>
-			</li>
-			<input type="text" class="language-filter" ng-model="toLanguageFilter" 
-				placeholder="Search Languages">
-			<button id="translate-btn" class="btn btn-primary btn-sm" 
-				ng-click="translate()">Translate</button>
-		</ul>
-		<div ng-include="'/angular_components/bing-results/bing-results.html'" 
-				class="translated-text bing"></div>
-	</div>
-	<br>
-	<div ng-include="'/angular_components/google-results/google-results.html'"></div>
+<div ng-controller="InputCtrl">
+	<h2>Translate</h2><br>
+
+	<section class="row">
+		<div class="col-md-6">
+			<ul class="left-language-selector">
+				<li ng-repeat="language in AllLanguages | filter:fromLanguageFilter | limitTo:3" 
+					ng-click="setFromLang($event)" class="language-container">
+					<div role="button" ng-class="{'first': $first, 'last': $last}">
+						{{ language }}
+					</div>
+				</li>
+				<input type="text" class="language-filter" ng-model="fromLanguageFilter" 
+					placeholder="Search Languages">
+			</ul>
+			<textarea class="translation-input" ng-model="$root.translationInput"
+					ng-keyup="translate()"></textarea>
+		</div>
+		<div class="col-md-6">
+			<ul class="right-language-selector">
+				<li ng-repeat="language in AllLanguages | filter:toLanguageFilter | limitTo:3" 
+					ng-click="setToLang($event)" class="language-container">
+					<div role="button" ng-class="{'first': $first, 'last': $last}">
+						{{ language }}
+					</div>
+				</li>
+				<input type="text" class="language-filter" ng-model="toLanguageFilter" 
+					placeholder="Search Languages">
+				<button id="translate-btn" class="btn btn-primary btn-sm" 
+					ng-click="translate()">Translate</button>
+			</ul>
+			<div ng-include="'/angular_components/bing-results/bing-results.html'" 
+					class="translated-text bing"></div>
+		</div>
+	</section><br>
+
+	<section class="row">
+		<div class="col-md-6">
+			<div ng-include="'/angular_components/google-results/google-results.html'"
+				class="translated-text google"></div>
+		</div>
+		<div class="col-md-6">
+			<div ng-include="'/angular_components/yandex-results/yandex-results.html'"
+				class="translated-text yandex"></div>
+		</div>
+	</section><br>
+
   <div ng-include="'/angular_components/web-service-x-results/web-service-x-results.html'"></div>
-</form>
+</div>

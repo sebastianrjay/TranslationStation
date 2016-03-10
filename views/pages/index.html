@@ -20,13 +20,23 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  <section class="row">
+  <main class="row">
     <div class="col-md-1"></div>
-    <div class="col-md-10">
-      <div ng-include="'/angular_components/input/input.html'"></div>
+    <div class="col-md-10" ng-include="'/angular_components/input/input.html'"></div>
+    <div class="col-md-1"></div>
+  </main>
+
+  <br><br>
+
+  <footer class="row">
+    <div class="col-md-4"></div>
+    <div>
+      This website is powered by the <a href="https://bing.com/translator/">Bing</a>,
+      <a href="https://translate.google.com">Google</a> and 
+      <a href="https://translate.yandex.com/">Yandex</a> machine translation API's.
     </div>
-    <div class="col-md-1"></div>
-  </section>
+    <div class="col-md-4"></div>
+  </footer>
 
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -34,9 +44,11 @@
   integrity="sha-256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo=" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
   <script src="/angular_components/app.js"></script>
-  <script src="/angular_components/constants/api-constants.js"></script>
+  <script src="/angular_components/services/api-constants.js"></script>
+  <script src="/angular_components/services/translation-api-util.js"></script>
   <script src="/angular_components/bing-results/bing-results.js"></script>
   <script src="/angular_components/google-results/google-results.js"></script>
+  <script src="/angular_components/yandex-results/yandex-results.js"></script>
   <script src="/angular_components/web-service-x-results/web-service-x-results.js"></script>
   <script src="/angular_components/input/input.js"></script>
 </body>

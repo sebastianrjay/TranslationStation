@@ -1,39 +1,39 @@
-# node-js-getting-started
+# About
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+Ever had the experience of trying to talk to someone who doesn't speak your 
+language? Maybe you resorted to using 
+[Google Translate](https://translate.google.com) to understand them, but found 
+the results incomprehensible. Maybe you then resorted to using the 
+[Bing](https://bing.com/translator) and [Yandex](https://translate.yandex.com) 
+translation services, and eventually gathered enough shreds of meaning from all 
+3 translations to make sense of the other person.
 
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+Now you can get crappy translations from all 3 services at once, on one crappy 
+website. Hopefully this will reduce the time you spend frantically typing 
+instead of conversing by at least 2/3.
 
-## Running Locally
+# Description
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
+TranslationStation concurrently fetches translations from the Bing, Google and 
+Yandex API's. It is styled to resemble Google Translate, with the addition of a 
+language search feature.
 
-```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
-$ npm install
-$ npm start
-```
+The Google Translate API is not enabled yet, but will be once I pay for it.
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Check out the live website [here](https://limitless-spire-84378.herokuapp.com)!
 
-## Deploying to Heroku
+It's a work in progress.
 
-```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
-or
+# Technical Details
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+This website runs on [NodeJS](https://nodejs.org/), 
+[Express 4](http://expressjs.com/) and [Angular 1.5.0](https://angularjs.org/). 
+Maybe I'll add MongoDB so that I can officially say I built it on the MEAN 
+stack. There's no reason to add a database now, although it could be useful for 
+adding analytics features (e.g. to save and show users the most commonly 
+searched translations for each language pairing).
 
-## Documentation
-
-For more information about using Node.js on Heroku, see these Dev Center articles:
-
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+In order to make the user experience as blazingly fast as possible and to 
+minimize costly API calls, I've taken advantage of Node's 
+[node-cache](https://www.npmjs.com/package/node-cache) library to cache the 
+results of recent translation queries.
