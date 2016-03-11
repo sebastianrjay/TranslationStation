@@ -2,7 +2,7 @@
 	<h2>Translate</h2><br>
 
 	<section class="row">
-		<div class="col-md-6">
+		<div class="col-md-6 io-container">
 			<ul class="left-language-selector">
 				<li ng-repeat="language in AllLanguages | filter:fromLanguageFilter | limitTo:3" 
 					ng-click="setFromLang($event)" class="language-container">
@@ -16,7 +16,7 @@
 			<textarea class="translation-input" ng-model="$root.translationInput"
 					ng-keyup="translate()"></textarea>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6 io-container">
 			<ul class="right-language-selector">
 				<li ng-repeat="language in AllLanguages | filter:toLanguageFilter | limitTo:3" 
 					ng-click="setToLang($event)" class="language-container">
@@ -36,14 +36,12 @@
 
 	<section class="row">
 		<div class="col-md-6">
-			<div ng-include="'/angular_components/google-results/google-results.html'"
-				class="translated-text google"></div>
+			<div ng-include="'/angular_components/frengly-results/frengly-results.html'"
+				class="translated-text frengly"></div>
 		</div>
 		<div class="col-md-6">
 			<div ng-include="'/angular_components/yandex-results/yandex-results.html'"
 				class="translated-text yandex"></div>
 		</div>
 	</section><br>
-
-  <div ng-include="'/angular_components/web-service-x-results/web-service-x-results.html'"></div>
 </div>

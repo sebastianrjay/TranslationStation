@@ -3,7 +3,10 @@
 angular.module('translationStation.bing-results', ['translationStation.translation-api-util'])
 
 .controller('BingResultsCtrl', function(translationAPIUtil, $http, $rootScope, $scope) {
-	$scope.translatedText = "";
+
+	$scope.$on('resetTranslatedText', function(event) {
+		translationAPIUtil.resetTranslatedText($scope);
+	});
 
 	$scope.$on('translate', function(event) {
 		translationAPIUtil.translate('bing', $rootScope.fromLanguageBingAbbrv,

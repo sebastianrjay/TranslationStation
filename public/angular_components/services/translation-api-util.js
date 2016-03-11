@@ -4,6 +4,10 @@ var capitalize = function(string) {
 
 angular.module('translationStation.translation-api-util', [])
 	.service('translationAPIUtil', function($http) {
+		this.resetTranslatedText = function($scope) {
+			$scope.translatedText = "";
+		};
+
 		this.translate = function(apiName, fromLanguage, toLanguage, text, $scope) {
 			
 			if(!fromLanguage && !toLanguage) {
@@ -17,11 +21,12 @@ angular.module('translationStation.translation-api-util', [])
 						$scope.translatedText = data;
 					})
 					.error(function(data, status, headers, config) {
-						$scope.translatedText = 'Error ' + status + ': ' + data.error;
+						$scope.translatedText = 'A server error occurred when fetching ' + 
+						'translation results from ' + capitalize(apiName) + '.';
 					});
 			} else {
 				$scope.translatedText = capitalize(apiName) + 
 					' translation is unavailable for the chosen languages.';
 			}
-		}
+		};
 	});
