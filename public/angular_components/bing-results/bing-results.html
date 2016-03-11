@@ -1,1 +1,4 @@
-<p ng-controller="BingResultsCtrl">{{ translatedText }}</p>
+<div ng-controller="BingResultsCtrl">
+	<img ng-show="logoSrc" ng-src="{{ logoSrc }}" class="logo bing"></img>
+	<p>{{ translatedText }}</p>
+</div>

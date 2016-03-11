@@ -4,7 +4,10 @@ angular.module('translationStation.yandex-results', ['translationStation.transla
 
 .controller('YandexResultsCtrl', function(translationAPIUtil, $http, $rootScope, $scope) {
 
+	$scope.logoSrc = '/images/yandex_logo.png';
+
 	$scope.$on('resetTranslatedText', function(event) {
+		$scope.logoSrc = '/images/yandex_logo.png';
 		translationAPIUtil.resetTranslatedText($scope);
 	});
 

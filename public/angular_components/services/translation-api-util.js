@@ -9,6 +9,8 @@ angular.module('translationStation.translation-api-util', [])
 		};
 
 		this.translate = function(apiName, fromLanguage, toLanguage, text, $scope) {
+
+			$scope.logoSrc = '';
 			
 			if(!fromLanguage && !toLanguage) {
 				$scope.translatedText = 'To begin translation, choose a pair of languages.';

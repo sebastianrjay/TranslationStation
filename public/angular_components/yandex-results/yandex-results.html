@@ -1,1 +1,4 @@
-<p ng-controller="YandexResultsCtrl">{{ translatedText }}</p>
+<div ng-controller="YandexResultsCtrl">
+	<img ng-show="logoSrc" ng-src="{{ logoSrc }}" class="logo yandex"></img>
+	<p>{{ translatedText }}</p>
+</div>

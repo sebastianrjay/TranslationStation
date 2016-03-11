@@ -5,14 +5,16 @@ var lastAPICallTime = null;
 angular.module('translationStation.frengly-results', [])
 
 .controller('FrenglyResultsCtrl', function(translationAPIUtil, $http, $rootScope, $scope) {
-	$scope.translatedText = "";
+
+	$scope.logoSrc = '/images/frengly_logo.png';
 
 	$scope.$on('resetTranslatedText', function(event) {
+		$scope.logoSrc = '/images/frengly_logo.png';
 		translationAPIUtil.resetTranslatedText($scope);
 	});
 
 	$scope.$on('translate', function(event) {
-		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 4500)) {
+		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) {
 			translationAPIUtil.translate('frengly', $rootScope.fromLanguageFrenglyAbbrv,
 				$rootScope.toLanguageFrenglyAbbrv, $rootScope.translationInput, $scope);
 
