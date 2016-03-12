@@ -10,6 +10,10 @@
   height: 60px;
 }
 
+#footer-text {
+  text-align: center;
+}
+
 .language-selector {
   margin-left: -2.8em;
   width: 100%;
