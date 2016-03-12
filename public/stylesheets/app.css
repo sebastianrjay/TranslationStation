@@ -1,6 +1,17 @@
-/* app css stylesheet */
+#header {
+  color: #dd4b39;
+  font-size: 20px;
+  margin-left: 1.5em;
+}
 
-.left-language-selector, .right-language-selector {
+#header-container {
+  border-bottom: 1px solid #dcdcdc;
+  margin-bottom: 20px;
+  height: 60px;
+}
+
+.language-selector {
+  margin-left: -2.8em;
   width: 100%;
 }
 
@@ -15,14 +26,21 @@
 }
 
 *[role="button"] {
-  border-left: 0.05em solid #D0D0D0;
-  border-right: 0.05em solid #D0D0D0;
-  border-top: 0.1em solid #D0D0D0;
-  border-bottom: 0.1em solid #D0D0D0;
-  background-color: #F8F8F8;
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+  background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
+  background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
+  background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
+  background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+  border: 1px solid #dcdcdc;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: none;
+  color: #444;
   font-size: 12px;
   font-weight: bold;
+  max-width: 150px;
   padding: 0.4em 0.6em 0.4em 0.6em;
+  transition: max-width ease-in-out 400ms; 
 }
 
 *[role="button"].first {
@@ -36,11 +54,18 @@
 }
 
 *[role="button"]:hover {
+  background-color: #F8F8F8;
   border: 0.1em solid #A0A0A0;
+  cursor: default;
 }
 
 *[role="button"].selected {
-  background-color: #C0C0C0;
+  background-image: -webkit-linear-gradient(top,#eee,#e0e0e0);
+  background-image: -moz-linear-gradient(top,#eee,#e0e0e0);
+  background-image: -ms-linear-gradient(top,#eee,#e0e0e0);
+  background-image: -o-linear-gradient(top,#eee,#e0e0e0);
+  background-image: linear-gradient(top,#eee,#e0e0e0);
+  border: 1px solid #ccc;
 }
 
 .language-filter {
@@ -48,8 +73,8 @@
 }
 
 .translation-input, .translated-text {
-  font-size: 16px;
   box-sizing: border-box;
+  font-size: 16px;
   overflow-y: hidden;
   overflow-x: auto;
   padding: 0.5em 2em 2em 0.5em;
@@ -57,12 +82,23 @@
   width: 100%;
 }
 
-#translate-btn {
+.translated-text {
+  background-color: #F1F1F1;
+}
+
+#sign-in-btn {
+  font-size: 1em;
+  height: 50%;
+}
+
+#translate-btn, #sign-in-btn {
+  background: #4285f4;
+  border-radius: 2px;
   font-weight: bold;
 }
 
-.translated-text {
-  background-color: #F0F0F0;
+#translate-btn:hover, #sign-in-btn:hover {
+  cursor: default;
 }
 
 .logo {
@@ -82,4 +118,74 @@
 
 .logo.yandex {
   margin: -20px 0 0 -50px;
+}
+
+nav {
+  background-color: #F1F1F1;
+  font: 13px/27px Arial,sans-serif;
+  position: relative;
+  height: 60px;
+  width: 100%;
+  margin-left: 0!important;
+  margin-right: 0!important;
+  white-space: nowrap;
+}
+
+.left-container, .right-container {
+  height: 60px;
+  line-height: 58px;
+  overflow: hidden;
+  position: relative;
+  vertical-align: middle;
+  width: 14%;
+  z-index: 987;
+}
+
+.left-container {
+  float: left;
+}
+
+.left-container a:hover, .right-container a:hover {
+  text-decoration: none;
+}
+
+.right-container {
+  float: right;
+}
+
+#google-logo-helper, .left-buffer {
+  display: inline-block;
+  width: 15%;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.left-buffer {
+  width: 10%;
+}
+
+#google-logo {
+  height: 31px;
+  margin: auto;
+  vertical-align: middle;
+}
+
+i.glyphicon-th {
+  font-size: 1.4em;
+  vertical-align: middle;
+}
+
+#dropdown-btn {
+  opacity: 0.7;
+}
+
+#dropdown-btn:hover {
+  opacity: 1;
+}
+
+#google-plus-icon {
+  content: url('https://ssl.gstatic.com/images/branding/google_plus/1x/ic_w_google_plus_googred_24dp.png');
+  display: inline-block;
+  margin-left: 43%;
+  vertical-align: middle;
 }

@@ -4,6 +4,7 @@ var capitalize = function(string) {
 
 angular.module('translationStation.translation-api-util', [])
 	.service('translationAPIUtil', function($http) {
+		
 		this.resetTranslatedText = function($scope) {
 			$scope.translatedText = "";
 		};

@@ -19,8 +19,9 @@ Frengly.translate = function(fromLanguage, toLanguage, text, completionCallback)
 				var translatedText = JSON.parse(body).translation;
 				Frengly.queryCache.set((fromLanguage + toLanguage + text), translatedText);
 				completionCallback(translatedText);
-				lastAPICallTime = new Date().getTime();
 			}
+
+			lastAPICallTime = new Date().getTime();
 	  });
 	}
 }
