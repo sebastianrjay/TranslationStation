@@ -9,15 +9,15 @@ angular.module('translationStation.translation-api-util', [])
 			$scope.translatedText = "";
 		};
 
-		this.translate = function(apiName, fromLanguage, toLanguage, text, $scope) {
+		this.translate = function(apiName, srcLang, destLang, text, $scope) {
 
 			$scope.logoSrc = '';
 			
-			if(!fromLanguage && !toLanguage) {
+			if(!srcLang && !destLang) {
 				$scope.translatedText = 'To begin translation, choose a pair of languages.';
-			} else if(fromLanguage && toLanguage) {
-				var queryString = '/api/' + apiName + '/translate/?from=' + fromLanguage +
-				'&to=' + toLanguage + '&text=' + text;
+			} else if(srcLang && destLang) {
+				var queryString = '/api/' + apiName + '/translate/?from=' + srcLang +
+				'&to=' + destLang + '&text=' + text;
 
 				$http.get(queryString)
 					.success(function(data, status, headers, config) {

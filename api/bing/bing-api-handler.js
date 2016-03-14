@@ -3,23 +3,23 @@ var NodeCache = require('node-cache');
 var Bing = {};
 Bing.queryCache = new NodeCache();
 
-Bing.translate = function(fromLanguage, toLanguage, text, completionCallback) {
+Bing.translate = function(srcLang, destLang, text, completionCallback) {
 	if(Bing.bingToken && Bing.bingExpiration > (new Date().getTime() + 30000)) {
 		var url = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate?oncomplete=mycallback&appId=Bearer " + 
-			encodeURIComponent(Bing.bingToken) + "&from=" + fromLanguage + 
-			"&to=" + toLanguage + "&text=" + text;
+			encodeURIComponent(Bing.bingToken) + "&from=" + srcLang + 
+			"&to=" + destLang + "&text=" + text;
 			
     requestMaker(url, function(error, response, body) {
   		if(error) {
   			throw error;
   		} else {
   			var translatedText = body.slice(13, body.length - 3);
-  			Bing.queryCache.set((fromLanguage + toLanguage + text), translatedText);
+  			Bing.queryCache.set((srcLang + destLang + text), translatedText);
   			completionCallback(translatedText);
   		}
     });
 	} else {
-		Bing.fetchBingToken(Bing.translate, fromLanguage, toLanguage, text, completionCallback);
+		Bing.fetchBingToken(Bing.translate, srcLang, destLang, text, completionCallback);
 	}
 };
 

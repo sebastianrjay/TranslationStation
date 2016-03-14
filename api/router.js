@@ -7,11 +7,11 @@ var Yandex = require('./yandex/yandex-api-handler.js');
 
 var fetchAndRenderTranslationFromAPI = function(req, res, apiModule) {
   var query = req.query;
-  var fromLanguage = query.from, toLanguage = query.to, text = query.text;
-  var cachedResponse = apiModule.queryCache.get(fromLanguage + toLanguage + text);
+  var srcLang = query.from, destLang = query.to, text = query.text;
+  var cachedResponse = apiModule.queryCache.get(srcLang + destLang + text);
 
   if(cachedResponse) res.send(cachedResponse);
-  else apiModule.translate(fromLanguage, toLanguage, text, res.send.bind(res));
+  else apiModule.translate(srcLang, destLang, text, res.send.bind(res));
 }
 
 router.route('/bing/translate/')
