@@ -9,7 +9,11 @@ angular.module('translationStation.translation-api-util', [])
 			$scope.translatedText = "";
 		};
 
-		this.translate = function(apiName, srcLang, destLang, text, $scope) {
+		this.translate = function(apiName, srcLang, destLang, inputText, $scope) {
+			if(inputText === '') {
+				$scope.$broadcast('resetTranslatedText');
+				return;
+			}
 
 			$scope.logoSrc = '';
 			
@@ -17,7 +21,7 @@ angular.module('translationStation.translation-api-util', [])
 				$scope.translatedText = 'To begin translation, choose a pair of languages.';
 			} else if(srcLang && destLang) {
 				var queryString = '/api/' + apiName + '/translate/?from=' + srcLang +
-				'&to=' + destLang + '&text=' + text;
+				'&to=' + destLang + '&text=' + inputText;
 
 				$http.get(queryString)
 					.success(function(data, status, headers, config) {
