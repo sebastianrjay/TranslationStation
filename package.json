@@ -1,14 +1,12 @@
 {
-  "name": "node-js-getting-started",
-  "version": "0.1.5",
-  "description": "A sample Node.js app using Express 4",
+  "name": "TranslationStation",
+  "version": "1.0.0",
+  "description": "One-stop translation website built on the MEAN stack, using the Bing, Frengly and Yandex translation API's",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "consolidate": "0.14.0",
-    "ejs": "2.3.3",
     "express": "4.13.3",
     "node-cache": "3.2.0",
     "request": "2.11.3"
@@ -18,12 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/sebastianrjay/TranslationStation"
   },
   "keywords": [
     "node",
     "heroku",
-    "express"
+    "express",
+    "translate",
+    "TranslationStation"
   ],
   "license": "MIT"
 }
