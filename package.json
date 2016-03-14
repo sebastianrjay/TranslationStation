@@ -23,6 +23,7 @@
     "heroku",
     "express",
     "translate",
+    "translation",
     "TranslationStation"
   ],
   "license": "MIT",
