@@ -1,8 +1,8 @@
 {
-  "name": "Node.js Getting Started",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
+  "name": "TranslationStation",
+  "description": "One-stop translation website built on the MEAN stack, using the Bing, Frengly and Yandex translation API's",
+  "repository": "https://github.com/sebastianrjay/TranslationStation",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "static"],
+  "keywords": ["node", "express", "static", "translation", "TranslationStation"],
   "image": "heroku/nodejs"
 }

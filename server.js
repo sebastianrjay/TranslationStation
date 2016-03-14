@@ -6,7 +6,6 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use('/angular_components', express.static(__dirname + '/public/angular_components'));
 app.use('/api', router);
-app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/images', express.static(__dirname + '/public/images'));
 app.use('/partials', express.static(__dirname + '/views/partials'));
 app.use('/stylesheets', express.static(__dirname + '/public/stylesheets'));

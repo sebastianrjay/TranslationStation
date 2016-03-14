@@ -33,6 +33,12 @@ It's a work in progress.
 
 This website runs on [NodeJS](https://nodejs.org/), 
 [Express 4](http://expressjs.com/) and [Angular 1.5.0](https://angularjs.org/). 
+It also uses [Grunt](http://gruntjs.com/), 
+[grunt-ng-annotate](https://github.com/mgol/grunt-ng-annotate) and 
+[grunt-contrib-uglify](https://github.com/gruntjs/grunt-contrib-uglify) to 
+automate minification tasks in development, and minimize load times in 
+production.
+
 Maybe I'll add MongoDB so that I can officially say I built it on the MEAN 
 stack. There's no reason to add a database now, although it could be useful for 
 adding analytics features (e.g. to count queries and show users the most 
