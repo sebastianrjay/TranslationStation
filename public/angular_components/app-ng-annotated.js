@@ -385,14 +385,14 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		$scope.$broadcast('translate');
 	};
 
-	$scope.setFromLang = function($event) {
+	$scope.setFromLang = function(event) {
 		$scope.srcLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$rootScope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
 		$rootScope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
 		$rootScope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
 	};
 
-	$scope.setToLang = function($event) {
+	$scope.setToLang = function(event) {
 		$scope.$broadcast('resetTranslatedText');
 		$scope.destLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$rootScope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];

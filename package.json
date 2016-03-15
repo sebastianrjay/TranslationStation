@@ -2,9 +2,9 @@
   "name": "TranslationStation",
   "version": "1.0.0",
   "description": "One-stop translation website built on the MEAN stack, using the Bing, Frengly and Yandex translation API's",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "grunt; node server.js"
   },
   "dependencies": {
     "express": "4.13.3",
