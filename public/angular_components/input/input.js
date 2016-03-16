@@ -15,6 +15,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		$rootScope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
 		$rootScope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
 		$rootScope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
+		if($scope.srcLang && $scope.destLang) $scope.translate();
 	};
 
 	$scope.setToLang = function(event) {
@@ -23,6 +24,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		$rootScope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];
 		$rootScope.destLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.destLang];
 		$rootScope.destLangYandexAbbrv = apiConstants.YandexLanguages[$scope.destLang];
+		if($scope.srcLang && $scope.destLang) $scope.translate();
 	};
 });
 
