@@ -2,7 +2,7 @@
 
 angular.module('translationStation.input', ['translationStation.api-constants'])
 
-.controller('InputCtrl', function(apiConstants, $http, $rootScope, $scope) {
+.controller('InputCtrl', function(apiConstants, $http, $scope) {
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
 
@@ -12,19 +12,23 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.setFromLang = function(event) {
 		$scope.srcLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$rootScope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
-		$rootScope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
-		$rootScope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
-		if($scope.srcLang && $scope.destLang) $scope.translate();
+		$scope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
+		$scope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
+		$scope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
+		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+			$scope.translate();
+		}
 	};
 
 	$scope.setToLang = function(event) {
 		$scope.$broadcast('resetTranslatedText');
 		$scope.destLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$rootScope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];
-		$rootScope.destLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.destLang];
-		$rootScope.destLangYandexAbbrv = apiConstants.YandexLanguages[$scope.destLang];
-		if($scope.srcLang && $scope.destLang) $scope.translate();
+		$scope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];
+		$scope.destLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.destLang];
+		$scope.destLangYandexAbbrv = apiConstants.YandexLanguages[$scope.destLang];
+		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+			$scope.translate();
+		}
 	};
 });
 

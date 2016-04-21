@@ -312,7 +312,8 @@ angular.module('translationStation.translation-api-util', [])
 
 angular.module('translationStation.bing-results', ['translationStation.translation-api-util'])
 
-.controller('BingResultsCtrl', ["translationAPIUtil", "$http", "$rootScope", "$scope", function(translationAPIUtil, $http, $rootScope, $scope) {
+.controller('BingResultsCtrl', ["translationAPIUtil", "$controller", "$http", "$scope", function(translationAPIUtil, $controller, $http, $scope) {
+	$controller('InputCtrl', { $scope: $scope });
 
 	$scope.logoSrc = '/images/bing_logo.png';
 
@@ -322,8 +323,8 @@ angular.module('translationStation.bing-results', ['translationStation.translati
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('bing', $rootScope.srcLangBingAbbrv,
-			$rootScope.destLangBingAbbrv, $rootScope.translationInput, $scope);
+		translationAPIUtil.translate('bing', $scope.srcLangBingAbbrv,
+			$scope.destLangBingAbbrv, $scope.translationInput, $scope);
 	});
 }]);
 
@@ -333,7 +334,8 @@ var lastAPICallTime = null;
 
 angular.module('translationStation.frengly-results', [])
 
-.controller('FrenglyResultsCtrl', ["translationAPIUtil", "$http", "$rootScope", "$scope", function(translationAPIUtil, $http, $rootScope, $scope) {
+.controller('FrenglyResultsCtrl', ["translationAPIUtil", "$controller", "$http", "$scope", function(translationAPIUtil, $controller, $http, $scope) {
+	$controller('InputCtrl', { $scope: $scope });
 
 	$scope.logoSrc = '/images/frengly_logo.png';
 
@@ -344,8 +346,8 @@ angular.module('translationStation.frengly-results', [])
 
 	$scope.$on('translate', function(event) {
 		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) {
-			translationAPIUtil.translate('frengly', $rootScope.srcLangFrenglyAbbrv,
-				$rootScope.destLangFrenglyAbbrv, $rootScope.translationInput, $scope);
+			translationAPIUtil.translate('frengly', $scope.srcLangFrenglyAbbrv,
+				$scope.destLangFrenglyAbbrv, $scope.translationInput, $scope);
 
 			lastAPICallTime = new Date().getTime();
 		} else {
@@ -358,7 +360,8 @@ angular.module('translationStation.frengly-results', [])
 
 angular.module('translationStation.yandex-results', ['translationStation.translation-api-util'])
 
-.controller('YandexResultsCtrl', ["translationAPIUtil", "$http", "$rootScope", "$scope", function(translationAPIUtil, $http, $rootScope, $scope) {
+.controller('YandexResultsCtrl', ["translationAPIUtil", "$controller", "$http", "$scope", function(translationAPIUtil, $controller, $http, $scope) {
+	$controller('InputCtrl', { $scope: $scope });
 
 	$scope.logoSrc = '/images/yandex_logo.png';
 
@@ -368,8 +371,8 @@ angular.module('translationStation.yandex-results', ['translationStation.transla
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('yandex', $rootScope.srcLangYandexAbbrv,
-			$rootScope.destLangYandexAbbrv, $rootScope.translationInput, $scope);
+		translationAPIUtil.translate('yandex', $scope.srcLangYandexAbbrv,
+			$scope.destLangYandexAbbrv, $scope.translationInput, $scope);
 	});
 }]);
 
@@ -377,7 +380,7 @@ angular.module('translationStation.yandex-results', ['translationStation.transla
 
 angular.module('translationStation.input', ['translationStation.api-constants'])
 
-.controller('InputCtrl', ["apiConstants", "$http", "$rootScope", "$scope", function(apiConstants, $http, $rootScope, $scope) {
+.controller('InputCtrl', ["apiConstants", "$http", "$scope", function(apiConstants, $http, $scope) {
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
 
@@ -387,19 +390,19 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.setFromLang = function(event) {
 		$scope.srcLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$rootScope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
-		$rootScope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
-		$rootScope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
-		if($scope.srcLang && $scope.destLang) $scope.translate();
+		$scope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
+		$scope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
+		$scope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
+		if($scope.translationInput && $scope.srcLang && $scope.destLang) $scope.translate();
 	};
 
 	$scope.setToLang = function(event) {
 		$scope.$broadcast('resetTranslatedText');
 		$scope.destLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$rootScope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];
-		$rootScope.destLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.destLang];
-		$rootScope.destLangYandexAbbrv = apiConstants.YandexLanguages[$scope.destLang];
-		if($scope.srcLang && $scope.destLang) $scope.translate();
+		$scope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];
+		$scope.destLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.destLang];
+		$scope.destLangYandexAbbrv = apiConstants.YandexLanguages[$scope.destLang];
+		if($scope.translationInput && $scope.srcLang && $scope.destLang) $scope.translate();
 	};
 }]);
 

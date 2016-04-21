@@ -2,7 +2,8 @@
 
 angular.module('translationStation.bing-results', ['translationStation.translation-api-util'])
 
-.controller('BingResultsCtrl', function(translationAPIUtil, $http, $rootScope, $scope) {
+.controller('BingResultsCtrl', function(translationAPIUtil, $controller, $http, $scope) {
+	$controller('InputCtrl', { $scope: $scope });
 
 	$scope.logoSrc = '/images/bing_logo.png';
 
@@ -12,7 +13,7 @@ angular.module('translationStation.bing-results', ['translationStation.translati
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('bing', $rootScope.srcLangBingAbbrv,
-			$rootScope.destLangBingAbbrv, $rootScope.translationInput, $scope);
+		translationAPIUtil.translate('bing', $scope.srcLangBingAbbrv,
+			$scope.destLangBingAbbrv, $scope.translationInput, $scope);
 	});
 });

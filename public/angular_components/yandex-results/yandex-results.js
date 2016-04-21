@@ -2,7 +2,8 @@
 
 angular.module('translationStation.yandex-results', ['translationStation.translation-api-util'])
 
-.controller('YandexResultsCtrl', function(translationAPIUtil, $http, $rootScope, $scope) {
+.controller('YandexResultsCtrl', function(translationAPIUtil, $controller, $http, $scope) {
+	$controller('InputCtrl', { $scope: $scope });
 
 	$scope.logoSrc = '/images/yandex_logo.png';
 
@@ -12,7 +13,7 @@ angular.module('translationStation.yandex-results', ['translationStation.transla
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('yandex', $rootScope.srcLangYandexAbbrv,
-			$rootScope.destLangYandexAbbrv, $rootScope.translationInput, $scope);
+		translationAPIUtil.translate('yandex', $scope.srcLangYandexAbbrv,
+			$scope.destLangYandexAbbrv, $scope.translationInput, $scope);
 	});
 });

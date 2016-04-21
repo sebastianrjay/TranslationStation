@@ -4,7 +4,8 @@ var lastAPICallTime = null;
 
 angular.module('translationStation.frengly-results', [])
 
-.controller('FrenglyResultsCtrl', function(translationAPIUtil, $http, $rootScope, $scope) {
+.controller('FrenglyResultsCtrl', function(translationAPIUtil, $controller, $http, $scope) {
+	$controller('InputCtrl', { $scope: $scope });
 
 	$scope.logoSrc = '/images/frengly_logo.png';
 
@@ -15,8 +16,8 @@ angular.module('translationStation.frengly-results', [])
 
 	$scope.$on('translate', function(event) {
 		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) {
-			translationAPIUtil.translate('frengly', $rootScope.srcLangFrenglyAbbrv,
-				$rootScope.destLangFrenglyAbbrv, $rootScope.translationInput, $scope);
+			translationAPIUtil.translate('frengly', $scope.srcLangFrenglyAbbrv,
+				$scope.destLangFrenglyAbbrv, $scope.translationInput, $scope);
 
 			lastAPICallTime = new Date().getTime();
 		} else {
