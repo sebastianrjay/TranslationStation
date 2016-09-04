@@ -4,9 +4,14 @@
 		<div class="col-md-6 io-container">
 			<ul class="language-selector">
 				<li ng-repeat="language in AllLanguages | filter:srcLangFilter | limitTo:3" 
-					ng-click="setFromLang($event)" class="language-container">
-					<div role="button" ng-class="{'first': $first, 'last': $last}">
+					ng-click="setSrcLang($event)" class="language-container">
+					<div role="button" ng-class="{'first': $first}">
 						{{ language }}
+					</div>
+				</li>
+				<li class="language-container">
+					<div id="detect-language-btn" role="button" class="last selected">
+						Detect language
 					</div>
 				</li>
 				<input type="text" class="language-filter" ng-model="srcLangFilter" 
@@ -15,6 +20,7 @@
 			<textarea class="translation-input" ng-model="translationInput"
 					ng-keyup="translate()"></textarea>
 		</div>
+
 		<div class="col-md-6 io-container">
 			<ul class="language-selector">
 				<li ng-repeat="language in AllLanguages | filter:destLangFilter | limitTo:3" 
@@ -23,10 +29,10 @@
 						{{ language }}
 					</div>
 				</li>
-				<input type="text" class="language-filter" ng-model="destLangFilter" 
-					placeholder="Search Languages">
 				<button id="translate-btn" class="btn btn-primary btn-sm" 
 					ng-click="translate()">Translate</button>
+				<input type="text" class="language-filter" ng-model="destLangFilter" 
+					placeholder="Search Languages">
 			</ul>
 			<div ng-include="'/angular_components/bing-results/bing-results.html'" 
 					class="translated-text bing"></div>
@@ -43,4 +49,5 @@
 				class="translated-text yandex"></div>
 		</div>
 	</section><br>
+
 </div>

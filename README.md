@@ -18,12 +18,8 @@ at least 2/3.
 
 TranslationStation concurrently fetches translations from the Bing, Frengly and 
 Yandex API's. It is styled to resemble Google Translate, with the addition of a 
-language search feature.
-
-Google Translate's API costs money and all the of the translation API's I 
-implemented are free. So I thought it'd be funny to style this translaiton 
-website to look just like Google Translate, while having it use the other API's 
-instead.
+language search feature. (I didn't use the Google Translate API because it does 
+not have a free usage tier.)
 
 Check out the live website [here](https://limitless-spire-84378.herokuapp.com)!
 
@@ -39,16 +35,17 @@ It also uses [Grunt](http://gruntjs.com/),
 automate minification tasks in development, and minimize load times in 
 production.
 
-Maybe I'll add MongoDB so that I can officially say I built it on the MEAN 
-stack. There's no reason to add a database now, although it could be useful for 
-adding analytics features (e.g. to count queries and show users the most 
-commonly searched translations for each language pairing). However, using an LRU 
-cache to show users trending translation queries yields much faster load times 
-than saving every translation query in a database, and completing a database 
-query to find the most-searched translations of all time.
+There's no reason to add a database now, although it could be useful for adding 
+analytics features (e.g. to count queries and show users the most commonly 
+searched translations for each language pairing). However, using an LRU cache to 
+show users trending translation queries would yield much faster load times than 
+saving every translation query in a database, and completing a database query to 
+find the most-searched translations of all time.
 
 In order to make the user experience as blazingly fast as possible and to 
 minimize costly API calls, I've taken advantage of Node's 
 [node-cache](https://www.npmjs.com/package/node-cache) library to cache the 
 results of recent translation queries. It isn't an LRU cache, but stores data 
-until it expires.
+until it expires. (The probability that someone requests a previously cached 
+query is rather low at current usage levels, especially since translations 
+are cached on every keyup event.)

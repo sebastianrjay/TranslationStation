@@ -14,7 +14,7 @@ Frengly.translate = function(srcLang, destLang, text, completionCallback) {
 
 		requestMaker(url, function(error, response, body) {
 			if(error) {
-				throw error;
+				console.error(error);
 			} else {
 				var translatedText = JSON.parse(body).translation;
 				Frengly.queryCache.set((srcLang + destLang + text), translatedText);

@@ -85,7 +85,7 @@ Constants.AllLanguages = [
   'Uzbek'
 ];
 
-Constants.BingLanguages = {
+Constants.BingLanguageCodes = {
 	"Arabic": "ar",
 	"Bosnian (Latin)": "bs-Latn",
 	"Bulgarian": "bg",
@@ -140,7 +140,7 @@ Constants.BingLanguages = {
 	"Yucatec Maya": "yua"
 };
 
-Constants.FrenglyLanguages = {
+Constants.FrenglyLanguageCodes = {
   Arabic: 'ar',
   Bulgarian: 'bg',
   'Chinese (Simplified)': 'zhCN',
@@ -186,7 +186,7 @@ Constants.FrenglyLanguages = {
   Vietnamese: 'vi'
 };
 
-Constants.YandexLanguages = {
+Constants.YandexLanguageCodes = {
   Albanian: 'sq',
   English: 'en',
   Arabic:  'ar',

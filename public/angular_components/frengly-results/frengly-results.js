@@ -16,8 +16,8 @@ angular.module('translationStation.frengly-results', [])
 
 	$scope.$on('translate', function(event) {
 		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) {
-			translationAPIUtil.translate('frengly', $scope.srcLangFrenglyAbbrv,
-				$scope.destLangFrenglyAbbrv, $scope.translationInput, $scope);
+			translationAPIUtil.translate('frengly', $scope, $scope.srcLangFrenglyCode,
+				$scope.destLangFrenglyCode);
 
 			lastAPICallTime = new Date().getTime();
 		} else {

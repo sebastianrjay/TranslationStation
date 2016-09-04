@@ -13,7 +13,7 @@ angular.module('translationStation.yandex-results', ['translationStation.transla
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('yandex', $scope.srcLangYandexAbbrv,
-			$scope.destLangYandexAbbrv, $scope.translationInput, $scope);
+		translationAPIUtil.translate('yandex', $scope, $scope.srcLangYandexCode,
+			$scope.destLangYandexCode);
 	});
 });

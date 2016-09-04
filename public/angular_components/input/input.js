@@ -2,19 +2,37 @@
 
 angular.module('translationStation.input', ['translationStation.api-constants'])
 
-.controller('InputCtrl', function(apiConstants, $http, $scope) {
+.controller('InputCtrl', function(apiConstants, $http, $scope, translationAPIUtil) {
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
 
-	$scope.translate = function() {
-		$scope.$broadcast('translate');
+	$scope.isLanguageDetectionEnabled = true;
+
+	$scope.srcLangShouldBeChecked = function() {
+		return ~[3, 7].indexOf($scope.translationInput.length) ||
+			$scope.translationInput.length % 5 === 0;
 	};
 
-	$scope.setFromLang = function(event) {
+	$scope.toggleLanguageDetection = function() {
+		$scope.isLanguageDetectionEnabled = !$scope.isLanguageDetectionEnabled;
+	};
+
+	$scope.translate = function() {
+		if ($scope.isLanguageDetectionEnabled && $scope.srcLangShouldBeChecked()) {
+			$scope.srcLangBingCode = null;
+			translationAPIUtil.detectLanguage($scope);
+		} else if ($scope.srcLangBingCode || !$scope.isLanguageDetectionEnabled) {
+			$scope.$broadcast('translate');
+		}
+	};
+
+	$scope.setSrcLang = function(event) {
+		$scope.isLanguageDetectionEnabled = false;
+
 		$scope.srcLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$scope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
-		$scope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
-		$scope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
+		$scope.srcLangBingCode = apiConstants.BingLanguageCodes[$scope.srcLang];
+		$scope.srcLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.srcLang];
+		$scope.srcLangYandexCode = apiConstants.YandexLanguageCodes[$scope.srcLang];
 		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
 			$scope.translate();
 		}
@@ -23,9 +41,9 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 	$scope.setToLang = function(event) {
 		$scope.$broadcast('resetTranslatedText');
 		$scope.destLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$scope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];
-		$scope.destLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.destLang];
-		$scope.destLangYandexAbbrv = apiConstants.YandexLanguages[$scope.destLang];
+		$scope.destLangBingCode = apiConstants.BingLanguageCodes[$scope.destLang];
+		$scope.destLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.destLang];
+		$scope.destLangYandexCode = apiConstants.YandexLanguageCodes[$scope.destLang];
 		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
 			$scope.translate();
 		}

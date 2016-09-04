@@ -13,7 +13,7 @@ angular.module('translationStation.bing-results', ['translationStation.translati
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('bing', $scope.srcLangBingAbbrv,
-			$scope.destLangBingAbbrv, $scope.translationInput, $scope);
+		translationAPIUtil.translate('bing', $scope, $scope.srcLangBingCode,
+			$scope.destLangBingCode);
 	});
 });

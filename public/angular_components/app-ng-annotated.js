@@ -98,7 +98,7 @@ Constants.AllLanguages = [
   'Uzbek'
 ];
 
-Constants.BingLanguages = {
+Constants.BingLanguageCodes = {
 	"Arabic": "ar",
 	"Bosnian (Latin)": "bs-Latn",
 	"Bulgarian": "bg",
@@ -153,7 +153,7 @@ Constants.BingLanguages = {
 	"Yucatec Maya": "yua"
 };
 
-Constants.FrenglyLanguages = {
+Constants.FrenglyLanguageCodes = {
   Arabic: 'ar',
   Bulgarian: 'bg',
   'Chinese (Simplified)': 'zhCN',
@@ -199,7 +199,7 @@ Constants.FrenglyLanguages = {
   Vietnamese: 'vi'
 };
 
-Constants.YandexLanguages = {
+Constants.YandexLanguageCodes = {
   Albanian: 'sq',
   English: 'en',
   Arabic:  'ar',
@@ -270,43 +270,60 @@ angular.module('translationStation.api-constants', [])
 
 var capitalize = function(string) {
 	return string[0].toUpperCase() + string.slice(1);
-}
+};
 
 angular.module('translationStation.translation-api-util', [])
-	.service('translationAPIUtil', ["$http", function($http) {
+
+.service('translationAPIUtil', ["$http", function($http) {
+
+	this.detectLanguage = function($scope) {
+		var queryString = '/api/bing/detect_language/?text=' + $scope.translationInput;
+
+		$http.get(queryString)
+			.success(function(data, status, headers, config) {
+				$scope.srcLangBingCode = data;
+				$scope.srcLangFrenglyCode = data;
+				$scope.srcLangYandexCode = data;
+				$scope.translate();
+			})
+			.error(function(data, status, headers, config) {
+				$scope.translatedText = 'A server error occurred when fetching ' + 
+				'translation results from ' + capitalize(apiName) + '.';
+			});
+	};
+	
+	this.resetTranslatedText = function($scope) {
+		$scope.translatedText = '';
+	};
+
+	this.translate = function(apiName, $scope, srcLang, destLang) {
+		if($scope.translationInput === '') {
+			$scope.$broadcast('resetTranslatedText');
+			return;
+		}
+
+		$scope.logoSrc = '';
 		
-		this.resetTranslatedText = function($scope) {
-			$scope.translatedText = "";
-		};
+		if(!srcLang && !destLang) {
+			$scope.translatedText = 'To begin translation, choose a pair of languages.';
+		} else if(srcLang && destLang) {
+			var queryString = '/api/' + apiName + '/translate/?from=' + srcLang +
+			'&to=' + destLang + '&text=' + $scope.translationInput;
 
-		this.translate = function(apiName, srcLang, destLang, inputText, $scope) {
-			if(inputText === '') {
-				$scope.$broadcast('resetTranslatedText');
-				return;
-			}
-
-			$scope.logoSrc = '';
-			
-			if(!srcLang && !destLang) {
-				$scope.translatedText = 'To begin translation, choose a pair of languages.';
-			} else if(srcLang && destLang) {
-				var queryString = '/api/' + apiName + '/translate/?from=' + srcLang +
-				'&to=' + destLang + '&text=' + inputText;
-
-				$http.get(queryString)
-					.success(function(data, status, headers, config) {
-						$scope.translatedText = data;
-					})
-					.error(function(data, status, headers, config) {
-						$scope.translatedText = 'A server error occurred when fetching ' + 
-						'translation results from ' + capitalize(apiName) + '.';
-					});
-			} else {
-				$scope.translatedText = capitalize(apiName) + 
-					' translation is unavailable for the chosen languages.';
-			}
-		};
-	}]);
+			$http.get(queryString)
+				.success(function(data, status, headers, config) {
+					$scope.translatedText = data;
+				})
+				.error(function(data, status, headers, config) {
+					$scope.translatedText = 'A server error occurred when fetching ' + 
+					'translation results from ' + capitalize(apiName) + '.';
+				});
+		} else {
+			$scope.translatedText = capitalize(apiName) + 
+				' translation is unavailable for the chosen languages.';
+		}
+	};
+}]);
 
 'use strict';
 
@@ -323,8 +340,8 @@ angular.module('translationStation.bing-results', ['translationStation.translati
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('bing', $scope.srcLangBingAbbrv,
-			$scope.destLangBingAbbrv, $scope.translationInput, $scope);
+		translationAPIUtil.translate('bing', $scope, $scope.srcLangBingCode,
+			$scope.destLangBingCode);
 	});
 }]);
 
@@ -346,8 +363,8 @@ angular.module('translationStation.frengly-results', [])
 
 	$scope.$on('translate', function(event) {
 		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) {
-			translationAPIUtil.translate('frengly', $scope.srcLangFrenglyAbbrv,
-				$scope.destLangFrenglyAbbrv, $scope.translationInput, $scope);
+			translationAPIUtil.translate('frengly', $scope, $scope.srcLangFrenglyCode,
+				$scope.destLangFrenglyCode);
 
 			lastAPICallTime = new Date().getTime();
 		} else {
@@ -371,8 +388,8 @@ angular.module('translationStation.yandex-results', ['translationStation.transla
 	});
 
 	$scope.$on('translate', function(event) {
-		translationAPIUtil.translate('yandex', $scope.srcLangYandexAbbrv,
-			$scope.destLangYandexAbbrv, $scope.translationInput, $scope);
+		translationAPIUtil.translate('yandex', $scope, $scope.srcLangYandexCode,
+			$scope.destLangYandexCode);
 	});
 }]);
 
@@ -380,29 +397,51 @@ angular.module('translationStation.yandex-results', ['translationStation.transla
 
 angular.module('translationStation.input', ['translationStation.api-constants'])
 
-.controller('InputCtrl', ["apiConstants", "$http", "$scope", function(apiConstants, $http, $scope) {
+.controller('InputCtrl', ["apiConstants", "$http", "$scope", "translationAPIUtil", function(apiConstants, $http, $scope, translationAPIUtil) {
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
 
-	$scope.translate = function() {
-		$scope.$broadcast('translate');
+	$scope.isLanguageDetectionEnabled = true;
+
+	$scope.srcLangShouldBeChecked = function() {
+		return ~[3, 7].indexOf($scope.translationInput.length) ||
+			$scope.translationInput.length % 5 === 0;
 	};
 
-	$scope.setFromLang = function(event) {
+	$scope.toggleLanguageDetection = function() {
+		$scope.isLanguageDetectionEnabled = !$scope.isLanguageDetectionEnabled;
+	};
+
+	$scope.translate = function() {
+		if ($scope.isLanguageDetectionEnabled && $scope.srcLangShouldBeChecked()) {
+			$scope.srcLangBingCode = null;
+			translationAPIUtil.detectLanguage($scope);
+		} else if ($scope.srcLangBingCode || !$scope.isLanguageDetectionEnabled) {
+			$scope.$broadcast('translate');
+		}
+	};
+
+	$scope.setSrcLang = function(event) {
+		$scope.isLanguageDetectionEnabled = false;
+
 		$scope.srcLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$scope.srcLangBingAbbrv = apiConstants.BingLanguages[$scope.srcLang];
-		$scope.srcLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.srcLang];
-		$scope.srcLangYandexAbbrv = apiConstants.YandexLanguages[$scope.srcLang];
-		if($scope.translationInput && $scope.srcLang && $scope.destLang) $scope.translate();
+		$scope.srcLangBingCode = apiConstants.BingLanguageCodes[$scope.srcLang];
+		$scope.srcLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.srcLang];
+		$scope.srcLangYandexCode = apiConstants.YandexLanguageCodes[$scope.srcLang];
+		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+			$scope.translate();
+		}
 	};
 
 	$scope.setToLang = function(event) {
 		$scope.$broadcast('resetTranslatedText');
 		$scope.destLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
-		$scope.destLangBingAbbrv = apiConstants.BingLanguages[$scope.destLang];
-		$scope.destLangFrenglyAbbrv = apiConstants.FrenglyLanguages[$scope.destLang];
-		$scope.destLangYandexAbbrv = apiConstants.YandexLanguages[$scope.destLang];
-		if($scope.translationInput && $scope.srcLang && $scope.destLang) $scope.translate();
+		$scope.destLangBingCode = apiConstants.BingLanguageCodes[$scope.destLang];
+		$scope.destLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.destLang];
+		$scope.destLangYandexCode = apiConstants.YandexLanguageCodes[$scope.destLang];
+		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+			$scope.translate();
+		}
 	};
 }]);
 

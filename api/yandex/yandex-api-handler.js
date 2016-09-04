@@ -12,7 +12,7 @@ Yandex.translate = function(srcLang, destLang, text, completionCallback) {
 		
   requestMaker(url, function(error, response, body) {
 		if(error) {
-			throw error;
+			console.error(error);
 		} else {
 			var translatedText = JSON.parse(body).text[0];
 			Yandex.queryCache.set((srcLang + destLang + text), translatedText);
