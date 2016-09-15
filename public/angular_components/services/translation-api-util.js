@@ -2,9 +2,9 @@ var capitalize = function(string) {
 	return string[0].toUpperCase() + string.slice(1);
 };
 
-angular.module('translationStation.translation-api-util', [])
+angular.module('translationStation.translation-api-util', ['translationStation.api-constants'])
 
-.service('translationAPIUtil', function($http) {
+.service('translationAPIUtil', function(apiConstants, $http) {
 
 	this.detectLanguage = function($scope) {
 		var queryString = '/api/bing/detect_language/?text=' + $scope.translationInput;
@@ -14,6 +14,7 @@ angular.module('translationStation.translation-api-util', [])
 				$scope.srcLangBingCode = data;
 				$scope.srcLangFrenglyCode = data;
 				$scope.srcLangYandexCode = data;
+				$scope.detectLangBtnText = apiConstants.BingLanguages[data] + ' - detected';
 				$scope.translate();
 			})
 			.error(function(data, status, headers, config) {

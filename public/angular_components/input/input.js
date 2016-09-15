@@ -6,14 +6,17 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
 
+	$scope.detectLangBtnText = 'Detect language';
 	$scope.isLanguageDetectionEnabled = true;
 
 	$scope.srcLangShouldBeChecked = function() {
-		return ~[3, 7].indexOf($scope.translationInput.length) ||
-			$scope.translationInput.length % 5 === 0;
+		return typeof $scope.translationInput !== 'undefined' &&
+			(~[3, 7].indexOf($scope.translationInput.length) || $scope.translationInput.length % 5 === 0);
 	};
 
 	$scope.toggleLanguageDetection = function() {
+		$scope.srcLangBingCode = null;
+		$scope.detectLangBtnText = 'Detect language';
 		$scope.isLanguageDetectionEnabled = !$scope.isLanguageDetectionEnabled;
 	};
 
@@ -28,6 +31,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.setSrcLang = function(event) {
 		$scope.isLanguageDetectionEnabled = false;
+		$scope.detectLangBtnText = 'Detect language';
 
 		$scope.srcLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$scope.srcLangBingCode = apiConstants.BingLanguageCodes[$scope.srcLang];
@@ -38,7 +42,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		}
 	};
 
-	$scope.setToLang = function(event) {
+	$scope.setDestLang = function(event) {
 		$scope.$broadcast('resetTranslatedText');
 		$scope.destLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$scope.destLangBingCode = apiConstants.BingLanguageCodes[$scope.destLang];

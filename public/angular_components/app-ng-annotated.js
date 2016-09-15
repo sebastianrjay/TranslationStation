@@ -98,6 +98,61 @@ Constants.AllLanguages = [
   'Uzbek'
 ];
 
+Constants.BingLanguages = {
+  ar: 'Arabic',
+  'bs-Latn': 'Bosnian (Latin)',
+  bg: 'Bulgarian',
+  ca: 'Catalan',
+  'zh-CHS': 'Chinese Simplified',
+  'zh-CHT': 'Chinese Traditional',
+  hr: 'Croatian',
+  cs: 'Czech',
+  da: 'Danish',
+  nl: 'Dutch',
+  en: 'English',
+  et: 'Estonian',
+  fi: 'Finnish',
+  fr: 'French',
+  de: 'German',
+  el: 'Greek',
+  ht: 'Haitian Creole',
+  he: 'Hebrew',
+  hi: 'Hindi',
+  mww: 'Hmong Daw',
+  hu: 'Hungarian',
+  id: 'Indonesian',
+  it: 'Italian',
+  ja: 'Japanese',
+  sw: 'Kiswahili',
+  tlh: 'Klingon',
+  'tlh-Qaak': 'Klingon (pIqaD)',
+  ko: 'Korean',
+  lv: 'Latvian',
+  lt: 'Lithuanian',
+  ms: 'Malay',
+  mt: 'Maltese',
+  no: 'Norwegian',
+  fa: 'Persian',
+  pl: 'Polish',
+  pt: 'Portuguese',
+  otq: 'Querétaro Otomi',
+  ro: 'Romanian',
+  ru: 'Russian',
+  'sr-Cyrl': 'Serbian (Cyrillic)',
+  'sr-Latn': 'Serbian (Latin)',
+  sk: 'Slovak',
+  sl: 'Slovenian',
+  es: 'Spanish',
+  sv: 'Swedish',
+  th: 'Thai',
+  tr: 'Turkish',
+  uk: 'Ukrainian',
+  ur: 'Urdu',
+  vi: 'Vietnamese',
+  cy: 'Welsh',
+  yua: 'Yucatec Maya'
+};
+
 Constants.BingLanguageCodes = {
 	"Arabic": "ar",
 	"Bosnian (Latin)": "bs-Latn",
@@ -272,9 +327,9 @@ var capitalize = function(string) {
 	return string[0].toUpperCase() + string.slice(1);
 };
 
-angular.module('translationStation.translation-api-util', [])
+angular.module('translationStation.translation-api-util', ['translationStation.api-constants'])
 
-.service('translationAPIUtil', ["$http", function($http) {
+.service('translationAPIUtil', ["apiConstants", "$http", function(apiConstants, $http) {
 
 	this.detectLanguage = function($scope) {
 		var queryString = '/api/bing/detect_language/?text=' + $scope.translationInput;
@@ -284,6 +339,7 @@ angular.module('translationStation.translation-api-util', [])
 				$scope.srcLangBingCode = data;
 				$scope.srcLangFrenglyCode = data;
 				$scope.srcLangYandexCode = data;
+				$scope.detectLangBtnText = apiConstants.BingLanguages[data] + ' - detected';
 				$scope.translate();
 			})
 			.error(function(data, status, headers, config) {
@@ -363,8 +419,8 @@ angular.module('translationStation.frengly-results', [])
 
 	$scope.$on('translate', function(event) {
 		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) {
-			translationAPIUtil.translate('frengly', $scope, $scope.srcLangFrenglyCode,
-				$scope.destLangFrenglyCode);
+			// translationAPIUtil.translate('frengly', $scope, $scope.srcLangFrenglyCode,
+			// 	$scope.destLangFrenglyCode);
 
 			lastAPICallTime = new Date().getTime();
 		} else {
@@ -401,14 +457,17 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
 
+	$scope.detectLangBtnText = 'Detect language';
 	$scope.isLanguageDetectionEnabled = true;
 
 	$scope.srcLangShouldBeChecked = function() {
-		return ~[3, 7].indexOf($scope.translationInput.length) ||
-			$scope.translationInput.length % 5 === 0;
+		return typeof $scope.translationInput !== 'undefined' &&
+			(~[3, 7].indexOf($scope.translationInput.length) || $scope.translationInput.length % 5 === 0);
 	};
 
 	$scope.toggleLanguageDetection = function() {
+		$scope.srcLangBingCode = null;
+		$scope.detectLangBtnText = 'Detect language';
 		$scope.isLanguageDetectionEnabled = !$scope.isLanguageDetectionEnabled;
 	};
 
@@ -423,6 +482,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.setSrcLang = function(event) {
 		$scope.isLanguageDetectionEnabled = false;
+		$scope.detectLangBtnText = 'Detect language';
 
 		$scope.srcLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$scope.srcLangBingCode = apiConstants.BingLanguageCodes[$scope.srcLang];
@@ -433,7 +493,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		}
 	};
 
-	$scope.setToLang = function(event) {
+	$scope.setDestLang = function(event) {
 		$scope.$broadcast('resetTranslatedText');
 		$scope.destLang = $.parseHTML(event.currentTarget.innerHTML.trim())[0].innerHTML.trim();
 		$scope.destLangBingCode = apiConstants.BingLanguageCodes[$scope.destLang];

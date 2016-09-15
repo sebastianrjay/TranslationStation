@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var requestMaker = require('request');
 var router = require('./api/router.js');

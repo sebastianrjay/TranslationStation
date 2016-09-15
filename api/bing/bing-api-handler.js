@@ -51,11 +51,11 @@ Bing.fetchAPIToken = function(successCallback) {
 	requestMaker.post(
 	    'https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/',
 	    { form: { 
-	       client_id : 'TranslationStationAngular', 
-	       client_secret  : '8UdAUfYMIL7ZmSQ1fX0m9q81ejVeItUMZzA1PoiE1WU=', 
-	       scope  : 'http://api.microsofttranslator.com', 
-	       grant_type  : 'client_credentials' 
-	    } },
+         client_id : process.env.BING_CLIENT_ID, 
+         client_secret  : process.env.BING_CLIENT_SECRET, 
+         scope  : 'http://api.microsofttranslator.com', 
+         grant_type  : 'client_credentials' 
+      } },
 	    function (error, bingResponse, body) {
         if (!error && bingResponse.statusCode == 200) {
       		var responseBody = JSON.parse(bingResponse.body);
@@ -63,7 +63,8 @@ Bing.fetchAPIToken = function(successCallback) {
       		Bing.bingExpiration = new Date().getTime() + 595000;
       		successCallback.apply(null, successCallbackArguments);
         } else {
-          console.error('ERROR: Could not fetch Bing token');           
+          console.error('ERROR: Could not fetch Bing token:\n', error);
+          console.info('Response from Bing:\n', bingResponse);           
         }
 	    }
 	);

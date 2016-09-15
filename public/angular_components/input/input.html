@@ -9,9 +9,9 @@
 						{{ language }}
 					</div>
 				</li>
-				<li class="language-container">
+				<li class="language-container" ng-click="toggleLanguageDetection()">
 					<div id="detect-language-btn" role="button" class="last selected">
-						Detect language
+						{{ detectLangBtnText }}
 					</div>
 				</li>
 				<input type="text" class="language-filter" ng-model="srcLangFilter" 
@@ -24,7 +24,7 @@
 		<div class="col-md-6 io-container">
 			<ul class="language-selector">
 				<li ng-repeat="language in AllLanguages | filter:destLangFilter | limitTo:3" 
-					ng-click="setToLang($event)" class="language-container">
+					ng-click="setDestLang($event)" class="language-container">
 					<div role="button" ng-class="{'first': $first, 'last': $last}">
 						{{ language }}
 					</div>
