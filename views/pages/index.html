@@ -3,53 +3,43 @@
 <!--[if IE 7]>         <html lang="en" ng-app="translationStation" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="translationStation" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Translation Station</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/stylesheets/app.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
-  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" 
-  crossorigin="anonymous">
-</head>
-<body ng-app="translationStation">
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Translation Station</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" 
+      crossorigin="anonymous"
+    >
+  </head>
+  <body ng-app="translationStation">
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
-  <header ng-include="'/partials/_header.html'"></header>
-  
-  <main class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10" ng-include="'/angular_components/input/input.html'"></div>
-    <div class="col-md-1"></div>
-  </main>
+    <header ng-include="'/partials/_header.html'"></header>
+    
+    <main class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10" ng-include="'/angular_components/input/input.html'"></div>
+      <div class="col-md-1"></div>
+    </main>
 
-  <br><br>
+    <br><br>
 
-  <footer class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4" id="footer-text">
-      <p>
-        This website is powered by the <a href="https://bing.com/translator/">Bing</a>,
-        <a href="http://frengly.com">Frengly</a> and 
-        <a href="https://translate.yandex.com/">Yandex</a> machine translation API's.
-      </p>
-      <p>
-        <a href="https://github.com/sebastianrjay/TranslationStation">View source code on Github</a>
-      </p>
-    </div>
-    <div class="col-md-4"></div>
-  </footer>
+    <footer class="row" ng-include="'/partials/_footer.html'"></footer>
 
-  <br><br>
+    <br><br>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
-  integrity="sha-256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo=" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-  <script src="/angular_components/app.min.js"></script>
-</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+    integrity="sha-256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="/angular_components/app.min.js"></script>
+  </body>
 </html>

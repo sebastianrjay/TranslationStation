@@ -1,5 +1,4 @@
 var express = require('express');
-var requestMaker = require('request');
 var router = express.Router();
 
 var apiModules = {
@@ -9,16 +8,16 @@ var apiModules = {
 };
 
 var fetchAndRenderTranslationFromAPI = function(req, res, apiModule) {
-  var query = req.query;
-  var srcLang = query.from, destLang = query.to, text = query.text;
+  var body = req.body;
+  var srcLang = body.from, destLang = body.to, text = body.text;
   var cachedResponse = apiModule.queryCache.get(srcLang + destLang + text);
 
-  if(cachedResponse) res.send(cachedResponse);
+  if (cachedResponse) res.send(cachedResponse);
   else apiModule.translate(srcLang, destLang, text, res.send.bind(res));
 }
 
 Object.keys(apiModules).forEach(function(apiName) {
-  router.get(`/${apiName}/translate/`, function(req, res) {
+  router.post(`/${apiName}/translate/`, function(req, res) {
     fetchAndRenderTranslationFromAPI(req, res, apiModules[apiName]);
   });
 });
@@ -29,10 +28,9 @@ router.get('/bing/detect_language/', function(req, res) {
 });
 
 router.get('/bing/language_codes/', function(req, res) {
-	var url = 'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguagesForTranslate?appId=Bearer '
-	var cachedResponse = Bing.queryCache.get("language_codes_json");
+	var cachedResponse = Bing.queryCache.get('language_codes_json');
 
-	if(cachedResponse) res.send(cachedResponse);
+	if (cachedResponse) res.send(cachedResponse);
 	else Bing.getLanguageCodes(res.send.bind(res), true);
 });
 

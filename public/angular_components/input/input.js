@@ -11,7 +11,10 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.srcLangShouldBeChecked = function() {
 		return typeof $scope.translationInput !== 'undefined' &&
-			(~[3, 7].indexOf($scope.translationInput.length) || $scope.translationInput.length % 5 === 0);
+			(
+				~[3, 7].indexOf($scope.translationInput.length) || 
+				$scope.translationInput.length % 5 === 0
+			);
 	};
 
 	$scope.toggleLanguageDetection = function() {
@@ -37,7 +40,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		$scope.srcLangBingCode = apiConstants.BingLanguageCodes[$scope.srcLang];
 		$scope.srcLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.srcLang];
 		$scope.srcLangYandexCode = apiConstants.YandexLanguageCodes[$scope.srcLang];
-		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+		if ($scope.translationInput && $scope.srcLang && $scope.destLang) {
 			$scope.translate();
 		}
 	};
@@ -48,7 +51,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		$scope.destLangBingCode = apiConstants.BingLanguageCodes[$scope.destLang];
 		$scope.destLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.destLang];
 		$scope.destLangYandexCode = apiConstants.YandexLanguageCodes[$scope.destLang];
-		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+		if ($scope.translationInput && $scope.srcLang && $scope.destLang) {
 			$scope.translate();
 		}
 	};

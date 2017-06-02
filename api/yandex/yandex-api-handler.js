@@ -1,17 +1,14 @@
-var requestMaker = require('request');
+var request = require('request');
 var NodeCache = require('node-cache');
 var Yandex = {};
 Yandex.queryCache = new NodeCache();
 
-var YandexAPIKey = 'trnsl.1.1.20160309T231137Z.b294fc0927e1ef12.b3fd557fbac6b99b74f0b8ab132f2ececdb68939';
-
 Yandex.translate = function(srcLang, destLang, text, completionCallback) {
-	var url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' 
-			+ YandexAPIKey + '&text=' + encodeURIComponent(text) + '&lang='
-			+ srcLang + '-' + destLang;
-		
-  requestMaker(url, function(error, response, body) {
-		if(error) {
+	var url = process.env.YANDEX_ROOT_URL + '?key=' + process.env.YANDEX_API_KEY + 
+		'&text=' + encodeURIComponent(text) + '&lang=' + srcLang + '-' + destLang;
+
+  request(url, function(error, response, body) {
+		if (error) {
 			console.error(error);
 		} else {
 			var translatedText = JSON.parse(body).text[0];

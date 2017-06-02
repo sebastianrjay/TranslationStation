@@ -1,29 +1,32 @@
-var requestMaker = require('request');
+var request = require('request');
 var NodeCache = require('node-cache');
 var Frengly = {};
 Frengly.queryCache = new NodeCache();
 
-var lastAPICallTime = null;
-
 Frengly.translate = function(srcLang, destLang, text, completionCallback) {
-	var url = 'http://frengly.com?src=' + srcLang + '&dest=' + destLang + 
-		'&text=' + text + '&outformat=json&email=sebastianrjay@gmail.com&password=Frengly1';
+	var data = {
+		src: srcLang,
+		dest: destLang,
+		text: text,
+		email: process.env.FRENGLY_EMAIL,
+		password: process.env.FRENGLY_PASSWORD
+	};
 
-	if((lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) || 
-			!lastAPICallTime) {
+	var options = {
+		uri: process.env.FRENGLY_ROOT_URL,
+		method: 'POST',
+		json: data
+	};
 
-		requestMaker(url, function(error, response, body) {
-			if(error) {
-				console.error(error);
-			} else {
-				var translatedText = JSON.parse(body).translation;
-				Frengly.queryCache.set((srcLang + destLang + text), translatedText);
-				completionCallback(translatedText);
-			}
-
-			lastAPICallTime = new Date().getTime();
-	  });
-	}
-}
+	request(options, function(error, response, body) {
+		if (error) {
+			console.error('frengly error', error);
+		} else {
+			var translatedText = body.translation;
+			Frengly.queryCache.set((srcLang + destLang + text), translatedText);
+			completionCallback(translatedText);
+		}
+  });
+};
 
 module.exports = Frengly;

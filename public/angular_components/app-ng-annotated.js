@@ -353,26 +353,30 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 	};
 
 	this.translate = function(apiName, $scope, srcLang, destLang) {
-		if($scope.translationInput === '') {
+		if ($scope.translationInput === '') {
 			$scope.$broadcast('resetTranslatedText');
 			return;
 		}
 
 		$scope.logoSrc = '';
 		
-		if(!srcLang && !destLang) {
+		if (!srcLang && !destLang) {
 			$scope.translatedText = 'To begin translation, choose a pair of languages.';
-		} else if(srcLang && destLang) {
-			var queryString = '/api/' + apiName + '/translate/?from=' + srcLang +
-			'&to=' + destLang + '&text=' + $scope.translationInput;
+		} else if (srcLang && destLang) {
+			var uri = '/api/' + apiName + '/translate';
+			var data = {
+				from: srcLang,
+				to: destLang,
+				text: $scope.translationInput,
+			};
 
-			$http.get(queryString)
+			$http.post(uri, JSON.stringify(data))
 				.success(function(data, status, headers, config) {
 					$scope.translatedText = data;
 				})
 				.error(function(data, status, headers, config) {
 					$scope.translatedText = 'A server error occurred when fetching ' + 
-					'translation results from ' + capitalize(apiName) + '.';
+						'translation results from ' + capitalize(apiName) + '.';
 				});
 		} else {
 			$scope.translatedText = capitalize(apiName) + 
@@ -418,9 +422,10 @@ angular.module('translationStation.frengly-results', [])
 	});
 
 	$scope.$on('translate', function(event) {
-		if(lastAPICallTime && lastAPICallTime < (new Date().getTime() - 5000)) {
-			// translationAPIUtil.translate('frengly', $scope, $scope.srcLangFrenglyCode,
-			// 	$scope.destLangFrenglyCode);
+		// Query at most every 2.5s on keyup; Frengly only permits queries every 2s
+		if (lastAPICallTime && lastAPICallTime < (new Date().getTime() - 2500)) {
+			translationAPIUtil.translate('frengly', $scope, $scope.srcLangFrenglyCode,
+				$scope.destLangFrenglyCode);
 
 			lastAPICallTime = new Date().getTime();
 		} else {
@@ -462,7 +467,10 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 
 	$scope.srcLangShouldBeChecked = function() {
 		return typeof $scope.translationInput !== 'undefined' &&
-			(~[3, 7].indexOf($scope.translationInput.length) || $scope.translationInput.length % 5 === 0);
+			(
+				~[3, 7].indexOf($scope.translationInput.length) || 
+				$scope.translationInput.length % 5 === 0
+			);
 	};
 
 	$scope.toggleLanguageDetection = function() {
@@ -488,7 +496,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		$scope.srcLangBingCode = apiConstants.BingLanguageCodes[$scope.srcLang];
 		$scope.srcLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.srcLang];
 		$scope.srcLangYandexCode = apiConstants.YandexLanguageCodes[$scope.srcLang];
-		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+		if ($scope.translationInput && $scope.srcLang && $scope.destLang) {
 			$scope.translate();
 		}
 	};
@@ -499,7 +507,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		$scope.destLangBingCode = apiConstants.BingLanguageCodes[$scope.destLang];
 		$scope.destLangFrenglyCode = apiConstants.FrenglyLanguageCodes[$scope.destLang];
 		$scope.destLangYandexCode = apiConstants.YandexLanguageCodes[$scope.destLang];
-		if($scope.translationInput && $scope.srcLang && $scope.destLang) {
+		if ($scope.translationInput && $scope.srcLang && $scope.destLang) {
 			$scope.translate();
 		}
 	};
