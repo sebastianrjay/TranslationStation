@@ -12,6 +12,7 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 		$http.get(queryString)
 			.success(function(languageCode, status, headers, config) {
 				var detectedLanguage = apiConstants.BingLanguages[languageCode];
+				$scope.srcLang = detectedLanguage ? languageCode : null;
 				$scope.srcLangBingCode = languageCode;
 				$scope.srcLangFrenglyCode = languageCode;
 				$scope.srcLangYandexCode = languageCode;
