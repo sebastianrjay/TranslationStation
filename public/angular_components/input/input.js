@@ -5,16 +5,13 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 .controller('InputCtrl', function(apiConstants, $http, $scope, translationAPIUtil) {
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
-
 	$scope.detectLangBtnText = 'Detect language';
 	$scope.isLanguageDetectionEnabled = true;
 
 	$scope.srcLangShouldBeChecked = function() {
-		return typeof $scope.translationInput !== 'undefined' &&
-			(
-				~[3, 7].indexOf($scope.translationInput.length) || 
-				$scope.translationInput.length % 5 === 0
-			);
+		if ('undefined' === typeof $scope.translationInput) return false;
+		var inputLength = $scope.translationInput.length;
+		return inputLength > 0 && inputLength % 5 === 0;
 	};
 
 	$scope.toggleLanguageDetection = function() {

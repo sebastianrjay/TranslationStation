@@ -335,19 +335,19 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 		var queryString = '/api/bing/detect_language/?text=' + $scope.translationInput;
 
 		$http.get(queryString)
-			.success(function(data, status, headers, config) {
-				$scope.srcLangBingCode = data;
-				$scope.srcLangFrenglyCode = data;
-				$scope.srcLangYandexCode = data;
-				$scope.detectLangBtnText = apiConstants.BingLanguages[data] + ' - detected';
+			.success(function(languageCode, status, headers, config) {
+				var detectedLanguage = apiConstants.BingLanguages[languageCode];
+				$scope.srcLangBingCode = languageCode;
+				$scope.srcLangFrenglyCode = languageCode;
+				$scope.srcLangYandexCode = languageCode;
+				$scope.detectLangBtnText = detectedLanguage + ' - detected';
 				$scope.translate();
 			})
 			.error(function(data, status, headers, config) {
-				$scope.translatedText = 'A server error occurred when fetching ' + 
-				'translation results from ' + capitalize(apiName) + '.';
+				$scope.translatedText = 'A server error occurred during language detection';
 			});
 	};
-	
+
 	this.resetTranslatedText = function($scope) {
 		$scope.translatedText = '';
 	};
@@ -360,9 +360,7 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 
 		$scope.logoSrc = '';
 		
-		if (!srcLang && !destLang) {
-			$scope.translatedText = 'To begin translation, choose a pair of languages.';
-		} else if (srcLang && destLang) {
+		if (srcLang && destLang) {
 			var uri = '/api/' + apiName + '/translate';
 			var data = {
 				from: srcLang,
@@ -378,6 +376,9 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 					$scope.translatedText = 'A server error occurred when fetching ' + 
 						'translation results from ' + capitalize(apiName) + '.';
 				});
+		} else if (srcLang && !destLang) {
+			$scope.translatedText =
+				'Source language detected. Please select a destination language.';
 		} else {
 			$scope.translatedText = capitalize(apiName) + 
 				' translation is unavailable for the chosen languages.';
@@ -461,16 +462,13 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 .controller('InputCtrl', ["apiConstants", "$http", "$scope", "translationAPIUtil", function(apiConstants, $http, $scope, translationAPIUtil) {
 
 	$scope.AllLanguages = apiConstants.AllLanguages;
-
 	$scope.detectLangBtnText = 'Detect language';
 	$scope.isLanguageDetectionEnabled = true;
 
 	$scope.srcLangShouldBeChecked = function() {
-		return typeof $scope.translationInput !== 'undefined' &&
-			(
-				~[3, 7].indexOf($scope.translationInput.length) || 
-				$scope.translationInput.length % 5 === 0
-			);
+		if ('undefined' === typeof $scope.translationInput) return false;
+		var inputLength = $scope.translationInput.length;
+		return inputLength > 0 && inputLength % 5 === 0;
 	};
 
 	$scope.toggleLanguageDetection = function() {
