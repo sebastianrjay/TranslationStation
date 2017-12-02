@@ -2,6 +2,18 @@ var capitalize = function(string) {
 	return string[0].toUpperCase() + string.slice(1);
 };
 
+var freeTranslationError = function(api) {
+	return 'Free language translation via ' + api + ' is currently unavailable.';
+};
+
+var serverError = function(api) {
+	return 'A server error occurred during ' + api + ' language translation.'
+};
+
+var translationUnavailableError = function(api) {
+	return api + ' translation is unavailable for the chosen languages.';
+};
+
 angular.module('translationStation.translation-api-util', ['translationStation.api-constants'])
 
 .service('translationAPIUtil', function(apiConstants, $http) {
@@ -34,6 +46,7 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 			return;
 		}
 
+		var apiCapitalized = capitalize(apiName);
 		$scope.logoSrc = '';
 		
 		if (srcLang && destLang) {
@@ -46,18 +59,16 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 
 			$http.post(uri, JSON.stringify(data))
 				.success(function(data, status, headers, config) {
-					$scope.translatedText = data;
+					$scope.translatedText = data || freeTranslationError(apiCapitalized);
 				})
 				.error(function(data, status, headers, config) {
-					$scope.translatedText = 'A server error occurred when fetching ' + 
-						'translation results from ' + capitalize(apiName) + '.';
+					$scope.translatedText = serverError(apiCapitalized);
 				});
 		} else if (srcLang && !destLang) {
 			$scope.translatedText =
 				'Source language detected. Please select a destination language.';
 		} else {
-			$scope.translatedText = capitalize(apiName) + 
-				' translation is unavailable for the chosen languages.';
+			$scope.translatedText = translationUnavailableError(apiCapitalized);
 		}
 	};
 });
