@@ -8,7 +8,7 @@
 **Back End:**
 * 210 lines of Node.js and Express.js (server-side JavaScript)
 
-Check out the live website [HERE](https://limitless-spire-84378.herokuapp.com)!
+Check out the live website [HERE](https://translation-station.herokuapp.com)!
 
 The website contained in this repository is a clone of Google Translate. It 
 didn't absolutely need a back end, but I wanted an excuse to teach myself 
