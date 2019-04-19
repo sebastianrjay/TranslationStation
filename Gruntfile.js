@@ -25,12 +25,24 @@ module.exports = function(grunt) {
 	        ]
 	      }
 	    }
-	  }
+	  },
+
+    watch: {
+      scripts: {
+        files: ['**/**/*.js', '**/**/**/*.js'],
+        tasks: ['default'],
+        options: {
+          livereload: 4000,
+          watch: true,
+        },
+      },
+    },
   });
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-ng-annotate');
 
-  // Default task(s).
   grunt.registerTask('default', ['ngAnnotate', 'uglify']);
+  grunt.registerTask('watch', ['watch']);
 };
