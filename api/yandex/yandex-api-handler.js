@@ -4,14 +4,15 @@ var Yandex = {};
 Yandex.queryCache = new NodeCache();
 
 Yandex.translate = function(srcLang, destLang, text, completionCallback) {
-	var url = process.env.YANDEX_ROOT_URL + '?key=' + process.env.YANDEX_API_KEY + 
+	const url = process.env.YANDEX_ROOT_URL + '?key=' + process.env.YANDEX_API_KEY + 
 		'&text=' + encodeURIComponent(text) + '&lang=' + srcLang + '-' + destLang;
 
-  request(url, function(error, response, body) {
+  request(url, function(error, response, bodyJSON) {
 		if (error) {
-			console.error(error);
+			console.error('Yandex translate error: ', error);
 		} else {
-			var translatedText = JSON.parse(body).text[0];
+			const body = JSON.parse(bodyJSON);
+			const translatedText = [].concat(body.text)[0];
 			Yandex.queryCache.set((srcLang + destLang + text), translatedText);
 			completionCallback(translatedText);
 		}

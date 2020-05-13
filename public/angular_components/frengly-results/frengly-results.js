@@ -15,8 +15,8 @@ angular.module('translationStation.frengly-results', [])
 	});
 
 	$scope.$on('translate', function(event) {
-		// Query at most every 2.5s on keyup; Frengly only permits queries every 2s
-		if (lastAPICallTime && lastAPICallTime < (new Date().getTime() - 2500)) {
+		// Frengly Translate API only permits queries every 2s
+		if (lastAPICallTime && lastAPICallTime < (new Date().getTime() - 2000)) {
 			translationAPIUtil.translate('frengly', $scope, $scope.srcLangFrenglyCode,
 				$scope.destLangFrenglyCode);
 

@@ -20,7 +20,7 @@ Frengly.translate = function(srcLang, destLang, text, completionCallback) {
 
 	request(options, function(error, response, body) {
 		if (error) {
-			console.error('frengly error', error);
+			console.error('Frengly translate error: ', error);
 		} else {
 			var translatedText = body.translation;
 			Frengly.queryCache.set((srcLang + destLang + text), translatedText);
