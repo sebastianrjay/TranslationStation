@@ -6,7 +6,7 @@
 * 500 lines of JavaScript (including 300 lines of constants)
 
 **Back End:**
-* 210 lines of Node.js and Express.js (server-side JavaScript)
+* 175 lines of Node.js and Express.js (server-side JavaScript)
 
 Check out the live website [HERE](https://translation-station.herokuapp.com)!
 
