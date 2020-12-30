@@ -3,7 +3,7 @@ var capitalize = function(string) {
 };
 
 var freeTranslationError = function(api) {
-	return 'Free language translation via ' + api + ' is currently unavailable.';
+	return 'Free language translation via ' + api + ' quota exceeded.';
 };
 
 var serverError = function(api) {

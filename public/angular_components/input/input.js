@@ -24,7 +24,7 @@ angular.module('translationStation.input', ['translationStation.api-constants'])
 		if ($scope.isLanguageDetectionEnabled && $scope.srcLangShouldBeChecked()) {
 			$scope.srcLangBingCode = null;
 			translationAPIUtil.detectLanguage($scope);
-		} else if ($scope.srcLangBingCode || !$scope.isLanguageDetectionEnabled) {
+		} else if ($scope.srcLangBingCode) {
 			$scope.$broadcast('translate');
 		}
 	};
