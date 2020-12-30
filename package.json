@@ -4,7 +4,8 @@
   "description": "One-stop translation website built on the MEAN stack, using the Bing, Frengly and Yandex translation API's",
   "main": "server.js",
   "scripts": {
-    "start": "grunt && node server.js",
+    "build": "grunt",
+    "start": "node server.js",
     "watch": "grunt watch"
   },
   "dependencies": {

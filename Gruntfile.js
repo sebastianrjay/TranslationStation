@@ -5,14 +5,14 @@ module.exports = function(grunt) {
     ngAnnotate: {
       demo: {
         files: {
-            'public/angular_components/app-ng-annotated.js': [
-              'public/angular_components/app.js',
-            	'public/angular_components/services/api-constants.js',
-              'public/angular_components/services/translation-api-util.js',
-            	'public/angular_components/bing-results/bing-results.js',
-            	'public/angular_components/frengly-results/frengly-results.js',
-            	'public/angular_components/yandex-results/yandex-results.js',
-            	'public/angular_components/input/input.js']
+            'dist/app-ng-annotated.js': [
+              'frontend/angular_components/app.js',
+            	'frontend/angular_components/services/api-constants.js',
+              'frontend/angular_components/services/translation-api-util.js',
+            	'frontend/angular_components/bing-results/bing-results.js',
+            	'frontend/angular_components/frengly-results/frengly-results.js',
+            	'frontend/angular_components/yandex-results/yandex-results.js',
+            	'frontend/angular_components/input/input.js']
         },
       }
     },
@@ -20,8 +20,8 @@ module.exports = function(grunt) {
     uglify: {
 	    my_target: {
 	      files: {
-	        'public/angular_components/app.min.js': [
-	        	'public/angular_components/app-ng-annotated.js'
+	        'dist/app.min.js': [
+	        	'dist/app-ng-annotated.js'
 	        ]
 	      }
 	    }

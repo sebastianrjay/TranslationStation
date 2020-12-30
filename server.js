@@ -2,20 +2,21 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 var bodyParser = require('body-parser'),
     express = require('express'),
-    router = require('./api/router.js'),
+    router = require('./backend/router.js'),
     app = express();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/angular_components', express.static(__dirname + '/public/angular_components'));
+app.use('/angular_components', express.static(__dirname + '/frontend/angular_components'));
 app.use('/api', router);
-app.use('/images', express.static(__dirname + '/public/images'));
-app.use('/partials', express.static(__dirname + '/views/partials'));
-app.use('/stylesheets', express.static(__dirname + '/public/stylesheets'));
+app.use('/dist', express.static(__dirname + '/dist'));
+app.use('/images', express.static(__dirname + '/frontend/images'));
+app.use('/partials', express.static(__dirname + '/frontend/views/partials'));
+app.use('/stylesheets', express.static(__dirname + '/frontend/stylesheets'));
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/views/pages/index.html');
+  res.sendFile(__dirname + '/frontend/views/pages/index.html');
 });
 
 app.listen(app.get('port'), function() {

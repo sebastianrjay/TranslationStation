@@ -6,6 +6,9 @@ var freeTranslationError = function(api) {
 	return 'Free language translation via ' + api + ' quota exceeded.';
 };
 
+var lastAPICallTime = {};
+var minTimeoutMs = { 'bing': 250, 'frengly': 2000, 'yandex': 250 };
+
 var serverError = function(api) {
 	return 'A server error occurred during ' + api + ' language translation.'
 };
@@ -43,6 +46,14 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 	this.translate = function(apiName, $scope, srcLang, destLang) {
 		if ($scope.translationInput === '') {
 			$scope.$broadcast('resetTranslatedText');
+			return;
+		}
+
+		var lastCall = lastAPICallTime[apiName];
+		if (lastCall && lastCall < (new Date().getTime() - minTimeoutMs[apiName])) {
+			lastAPICallTime[apiName] = new Date().getTime();
+		} else {
+			lastAPICallTime[apiName] = (lastCall ? lastCall : new Date().getTime());
 			return;
 		}
 
