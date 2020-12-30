@@ -12,8 +12,7 @@ Check out the live website [HERE](https://translation-station.herokuapp.com)!
 
 The website contained in this repository is a clone of Google Translate. I could 
 have written it without the backend server code, but I wanted an excuse to teach 
-myself Node.js and Express.js at the time. The front end crudely debounces 
-queries without a timeout.
+myself Node.js and Express.js at the time.
 
 # Technical Details
 

@@ -7,7 +7,7 @@ var freeTranslationError = function(api) {
 };
 
 var lastAPICallTime = {};
-var minTimeoutMs = { 'bing': 250, 'frengly': 2000, 'yandex': 250 };
+var minDebounceMs = { 'bing': 250, 'frengly': 2000, 'yandex': 250 };
 
 var serverError = function(api) {
 	return 'A server error occurred during ' + api + ' language translation.'
@@ -50,7 +50,7 @@ angular.module('translationStation.translation-api-util', ['translationStation.a
 		}
 
 		var lastCall = lastAPICallTime[apiName];
-		if (lastCall && lastCall < (new Date().getTime() - minTimeoutMs[apiName])) {
+		if (lastCall && lastCall < (new Date().getTime() - minDebounceMs[apiName])) {
 			lastAPICallTime[apiName] = new Date().getTime();
 		} else {
 			lastAPICallTime[apiName] = (lastCall ? lastCall : new Date().getTime());
