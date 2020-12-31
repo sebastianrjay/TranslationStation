@@ -27,11 +27,4 @@ router.get('/bing/detect_language/', function(req, res) {
   apiModules.bing.detectLanguage(text, res.send.bind(res));
 });
 
-router.get('/bing/language_codes/', function(req, res) {
-	var cachedResponse = Bing.queryCache.get('language_codes_json');
-
-	if (cachedResponse) res.send(cachedResponse);
-	else Bing.getLanguageCodes(res.send.bind(res), true);
-});
-
 module.exports = router;

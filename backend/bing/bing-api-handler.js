@@ -17,7 +17,7 @@ Bing.detectLanguage = (text, completionCallback) => {
 
   request(options, (error, response, body) => {
     if (body.error) {
-      console.error(body.error)
+      console.error('Bing detectLanguage error: ', body.error)
     } else {
       const srcLang = body[0].language
       completionCallback && completionCallback(srcLang)
@@ -31,30 +31,12 @@ Bing.translate = (srcLang, destLang, text, completionCallback) => {
 
   request(options, (error, response, body) => {
     if (body.error) {
-      console.error(body.error)
+      console.error('Bing translate error: ', body.error)
     } else {
       const translatedText = body[0].translations[0].text
       Bing.queryCache.set((srcLang + destLang + text), translatedText)
       completionCallback && completionCallback(translatedText)
     }
-  })
-}
-
-Bing.getLanguageCodes = (completionCallback, convertToJSON) => {
-	const options = requestOptions(text, process.env.BING_LANGUAGES_ROOT_URL)
-		
-  request(options, (error, response, body) => {
-		if (body.error) {
-			console.error(body.error)
-		} else {
-			if (convertToJSON) {
-				Bing.queryCache.set('language_codes_json', JSON.stringify(body))
-				completionCallback(JSON.stringify(body))
-			} else {
-				Bing.queryCache.set('language_codes', body)
-				completionCallback(body)
-			}
-		}
   })
 }
 
